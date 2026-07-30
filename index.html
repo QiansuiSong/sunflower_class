@@ -125,7 +125,7 @@ canvas { display: block; width: 100%; height: 100%; background: #fbf4ed; border:
   <main class="app-shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">Ver.0.4 试玩 Demo</p>
+        <p class="eyebrow">Ver.0.5 试玩 Demo</p>
         <h1>向日葵中班</h1>
       </div>
       <button id="resetBtn" class="ghost danger" type="button">清除存档</button>
@@ -136,7 +136,7 @@ canvas { display: block; width: 100%; height: 100%; background: #fbf4ed; border:
         <div class="ending-sun">🍚</div>
         <p class="eyebrow">QAQ丨似乎想到了什么</p>
         <h2 id="surplusTitle">已经有能力投喂更多的人了</h2>
-        <p>“多的金币、勾玉……也许有其他用处。”</p>
+        <p>“多的金币、勾玉……怪可惜的。”</p>
         <p>QAQ丨意识到，这些剩下的资源也许可以分给新的成员。</p>
         <p class="small-note">不过，他还不知道该如何招募新成员。</p>
         <button id="surplusCloseBtn" class="primary" type="button">知道了</button>
@@ -153,6 +153,7 @@ canvas { display: block; width: 100%; height: 100%; background: #fbf4ed; border:
           <div>✓ 在《皇后养成计划》中累计获得至少 3 点氛围</div>
           <div>✓ 首次产生至少 1 份剩饭</div>
         </div>
+        <button id="restartDemoBtn" class="primary" type="button">重置进度并重新试玩</button>
       </section>
     </div>
 
@@ -265,7 +266,7 @@ canvas { display: block; width: 100%; height: 100%; background: #fbf4ed; border:
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'sunflower_class_demo_v04';
+  const STORAGE_KEY = 'sunflower_class_demo_v05';
   const ACTIVITY_MS = 30_000;
   const GAME_SECONDS = 90;
   const FOOD_TYPES = ['体力', '猫粮', '勾玉', '金币'];
@@ -481,11 +482,23 @@ canvas { display: block; width: 100%; height: 100%; background: #fbf4ed; border:
     render();
   });
 
-  $('resetBtn').addEventListener('click', () => {
-    if (!confirm('确定要清除试玩存档吗？')) return;
+  function resetDemoProgress({ askConfirm = true } = {}) {
+    if (askConfirm && !confirm('确定要清除试玩存档吗？')) return;
     try { localStorage.removeItem(STORAGE_KEY); } catch {}
-    location.reload();
-  });
+    state = defaultState();
+    bodies = [];
+    gameRunning = false;
+    gameEnded = false;
+    currentLevel = 0;
+    nextLevel = 1;
+    saveState();
+    render();
+    drawGame();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  $('resetBtn').addEventListener('click', () => resetDemoProgress());
+  $('restartDemoBtn').addEventListener('click', () => resetDemoProgress({ askConfirm: false }));
 
   // ===== 文字合成小游戏 =====
   const canvas = $('mergeCanvas');
