@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#8b3f36" />
+  <title>向日葵中班 · 试玩版</title>
+  <style>
+:root {
+  --bg: #f5eee7;
+  --panel: #fffaf5;
+  --text: #2d2525;
+  --muted: #746866;
+  --border: #decfc4;
+  --accent: #9b493f;
+  --accent-dark: #75332e;
+  --accent-soft: #f0d5cc;
+  --gold: #b48a43;
+  --success: #567a5c;
+  --danger: #9c3f3f;
+  --shadow: 0 10px 25px rgba(67, 43, 36, .08);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(200, 93, 74, .15), transparent 34%),
+    radial-gradient(circle at 100% 30%, rgba(116, 130, 92, .14), transparent 30%),
+    var(--bg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+}
+button { font: inherit; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.app-shell { width: min(1050px, calc(100% - 24px)); margin: 0 auto; padding: 22px 0 60px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 0; font-size: clamp(28px, 5vw, 44px); }
+h2 { margin-bottom: 0; }
+.eyebrow { margin-bottom: 4px; color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.card { background: rgba(255, 250, 245, .93); border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); }
+.hero { display: flex; gap: 18px; align-items: center; margin-bottom: 16px; }
+.avatar { width: 100px; height: 100px; image-rendering: pixelated; border-radius: 16px; border: 3px solid #56332f; background: #3d201c; }
+.hero-copy { flex: 1; min-width: 0; }
+.name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+.badge { background: var(--accent-soft); color: var(--accent-dark); border-radius: 999px; padding: 4px 10px; font-size: 13px; font-weight: 700; }
+.muted { color: var(--muted); }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.stats-grid div { border: 1px solid var(--border); border-radius: 12px; padding: 10px; background: #fff; }
+.stats-grid span, .preview-panel span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+.stats-grid strong { font-size: 18px; }
+.layout-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 16px; margin-bottom: 16px; }
+.section-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.small-note { color: var(--muted); font-size: 12px; }
+.activity-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.activity-button { text-align: left; border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 14px; cursor: pointer; }
+.activity-button:hover { border-color: var(--accent); transform: translateY(-1px); }
+.activity-button strong { display: block; margin-bottom: 5px; }
+.activity-button span { color: var(--muted); font-size: 13px; }
+.primary, .secondary, .ghost { border-radius: 12px; padding: 10px 14px; cursor: pointer; }
+.primary { border: 0; color: white; background: var(--accent); font-weight: 700; }
+.primary:hover { background: var(--accent-dark); }
+.secondary { border: 1px solid var(--accent); color: var(--accent-dark); background: var(--accent-soft); font-weight: 700; }
+.ghost { border: 1px solid var(--border); background: transparent; color: var(--muted); }
+.ghost.danger { color: var(--danger); }
+.queue-block { margin-top: 16px; }
+.queue-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.queue-head h3 { margin-bottom: 0; font-size: 15px; }
+.queue-list { padding-left: 22px; margin: 12px 0 0; }
+.queue-list li { padding: 7px 0; border-bottom: 1px dashed var(--border); }
+.empty-state { padding: 24px; text-align: center; border: 1px dashed var(--border); border-radius: 14px; color: var(--muted); }
+.food-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.food-chip { border: 1px solid var(--border); background: white; padding: 7px 10px; border-radius: 999px; }
+.callout { margin-top: 12px; border-left: 4px solid var(--gold); background: #fff5d9; padding: 12px; border-radius: 8px; font-size: 13px; }
+.progress-wrap { margin-top: 12px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+.progress-track { height: 10px; overflow: hidden; background: #eaded5; border-radius: 999px; }
+.progress-bar { height: 100%; width: 0; background: var(--accent); transition: width .2s linear; }
+.minigame-card { margin-bottom: 16px; background: linear-gradient(145deg, rgba(255,250,245,.96), rgba(249,238,255,.94)); border-color: #d8c4de; }
+.watch-button { background: linear-gradient(135deg, #fff7dc, #f7e7ff); border-color: #d5bbd9; }
+.game-summary { display: flex; gap: 14px; color: var(--muted); font-size: 13px; }
+.game-help { font-size: 13px; }
+.game-layout { display: grid; grid-template-columns: 155px minmax(0, 360px); justify-content: center; gap: 18px; align-items: start; }
+.preview-panel { display: grid; gap: 10px; }
+.preview-panel > div { border: 1px solid var(--border); background: #fff; border-radius: 12px; padding: 10px; }
+.canvas-wrap { position: relative; width: 100%; max-width: 360px; aspect-ratio: 360 / 520; }
+canvas { display: block; width: 100%; height: 100%; background: #fbf4ed; border: 2px solid #4d3935; border-radius: 12px; touch-action: none; }
+.game-overlay { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; background: rgba(251, 244, 237, .78); border-radius: 12px; pointer-events: none; }
+.game-overlay p { margin-bottom: 5px; font-size: 22px; font-weight: 800; }
+.game-overlay span { color: var(--muted); font-size: 13px; }
+.unlock-card { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.unlock-conditions { display: flex; gap: 10px; flex-wrap: wrap; }
+.condition { border: 1px solid var(--border); border-radius: 999px; padding: 8px 12px; color: var(--muted); }
+.condition.met { border-color: var(--success); background: #e7f1e8; color: var(--success); font-weight: 700; }
+.modal-backdrop { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(45,30,35,.58); backdrop-filter: blur(5px); }
+.ending-modal { width: min(430px, 100%); text-align: center; border-radius: 24px; padding: 32px 24px; background: linear-gradient(145deg, #fff9df, #ffe8ed 58%, #eee7ff); border: 2px solid #dcbf78; box-shadow: 0 24px 70px rgba(45,30,35,.28); }
+.ending-modal p { margin: 10px 0 0; }
+.ending-modal button { margin-top: 18px; }
+.ending-conditions { margin-top: 16px; display: grid; gap: 8px; text-align: left; }
+.ending-conditions div { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.66); border: 1px solid rgba(126,91,80,.18); }
+.ending-sun { font-size: 46px; color: #d59b2d; margin-bottom: 8px; }
+.hidden { display: none !important; }
+@media (max-width: 760px) {
+  .layout-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .game-layout { grid-template-columns: 1fr; }
+  .preview-panel { grid-template-columns: repeat(3, 1fr); }
+  .preview-panel button { grid-column: span 3; }
+  .canvas-wrap { margin: 0 auto; }
+  .unlock-card { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 480px) {
+  .app-shell { width: min(100% - 14px, 1050px); padding-top: 10px; }
+  .topbar { align-items: flex-start; }
+  .hero { align-items: flex-start; }
+  .avatar { width: 76px; height: 76px; }
+  .activity-buttons { grid-template-columns: 1fr; }
+  .game-summary { flex-direction: column; gap: 2px; text-align: right; }
+  .card { padding: 14px; border-radius: 16px; }
+}
+
+</style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Ver.0.4 试玩 Demo</p>
+        <h1>向日葵中班</h1>
+      </div>
+      <button id="resetBtn" class="ghost danger" type="button">清除存档</button>
+    </header>
+
+    <div id="surplusModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="surplusTitle">
+      <section class="ending-modal">
+        <div class="ending-sun">🍚</div>
+        <p class="eyebrow">QAQ丨似乎想到了什么</p>
+        <h2 id="surplusTitle">已经有能力投喂更多的人了</h2>
+        <p>“多的金币、勾玉……也许有其他用处。”</p>
+        <p>QAQ丨意识到，这些剩下的资源也许可以分给新的成员。</p>
+        <p class="small-note">不过，他还不知道该如何招募新成员。</p>
+        <button id="surplusCloseBtn" class="primary" type="button">知道了</button>
+      </section>
+    </div>
+
+    <div id="endingModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="endingTitle">
+      <section class="ending-modal">
+        <div class="ending-sun">☀</div>
+        <p class="eyebrow">新成员到达</p>
+        <h2 id="endingTitle">点点加入了向日葵中班</h2>
+        <p>试玩就到这里。点点是在满足以下条件后加入的：</p>
+        <div class="ending-conditions">
+          <div>✓ 在《皇后养成计划》中累计获得至少 3 点氛围</div>
+          <div>✓ 首次产生至少 1 份剩饭</div>
+        </div>
+      </section>
+    </div>
+
+    <section class="hero card">
+      <img src="data:image/png;base64,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" class="avatar" alt="QAQ丨像素头像" width="100" height="100" />
+      <div class="hero-copy">
+        <div class="name-row">
+          <h2>QAQ丨</h2>
+          <span id="statusBadge" class="badge">待机</span>
+        </div>
+        <p id="statusText" class="muted">可以安排他去玩游戏。</p>
+        <div class="stats-grid">
+          <div><span>成长</span><strong id="growthValue">0 / 3</strong></div>
+          <div><span>可安排</span><strong id="capacityValue">3次</strong></div>
+          <div><span>剩饭</span><strong id="leftoverValue">0</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout-grid">
+      <section class="card">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">放置部分</p>
+            <h2>安排游戏</h2>
+          </div>
+          <span class="small-note">每项30秒</span>
+        </div>
+
+        <div class="activity-buttons">
+          <button id="addLikedBtn" class="activity-button" type="button">
+            <strong>QAQ丨喜欢的游戏</strong>
+            <span>不带饭，完成后成长＋1</span>
+          </button>
+          <button id="addOnmyojiBtn" class="activity-button" type="button">
+            <strong>阴阳师</strong>
+            <span>完成后随机带回1份饭</span>
+          </button>
+          <button id="addWatchBtn" class="activity-button watch-button" type="button">
+            <strong>让他看我玩</strong>
+            <span>开启“皇后养成计划”</span>
+          </button>
+        </div>
+
+        <div class="queue-block">
+          <div class="queue-head">
+            <h3>安排队列</h3>
+            <button id="clearQueueBtn" class="ghost" type="button">清空未开始项目</button>
+          </div>
+          <ol id="queueList" class="queue-list"></ol>
+          <div id="activeProgressWrap" class="progress-wrap hidden">
+            <div class="progress-label"><span id="activeLabel"></span><span id="countdownValue"></span></div>
+            <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">饭</p>
+            <h2>当前饭盒</h2>
+          </div>
+        </div>
+        <div id="foodEmpty" class="empty-state">暂时没有饭。</div>
+        <div id="foodPanel" class="food-panel hidden">
+          <div id="foodList" class="food-list"></div>
+          <button id="eatBtn" class="primary" type="button">给QAQ丨使用1份饭</button>
+          <p class="small-note">使用第一份饭后，之后带回的饭会计为“剩饭”。</p>
+        </div>
+        <div id="eatenNote" class="callout hidden">QAQ丨已经吃过了。之后带回的饭会变成剩饭。</div>
+      </section>
+    </section>
+
+    <section id="minigameCard" class="card minigame-card hidden">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">玩家小游戏</p>
+          <h2>皇后养成计划</h2>
+        </div>
+        <div class="game-summary">
+          <span>本局最高：<strong id="bestRankText">—</strong></span>
+          <span>剩余：<strong id="gameTimer">90</strong>秒</span>
+        </div>
+      </div>
+
+      <p class="muted game-help">左右移动后点击投放。相同位份接触会合成。同一局只记录合成出的最高位份。试着把角色一路培养成皇后。</p>
+
+      <div class="game-layout">
+        <div class="preview-panel">
+          <div><span>当前</span><strong id="currentRank">答应</strong></div>
+          <div><span>下一个</span><strong id="nextRank">常在</strong></div>
+          <button id="startGameBtn" class="primary" type="button">开始90秒挑战</button>
+          <button id="dropBtn" class="secondary" type="button" disabled>投放</button>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="mergeCanvas" width="360" height="520" aria-label="位份合成游戏区域"></canvas>
+          <div id="gameOverlay" class="game-overlay">
+            <p id="overlayTitle">准备开始</p>
+            <span id="overlayText">相同位份接触后会自动合成</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <script>
+(() => {
+  'use strict';
+
+  const STORAGE_KEY = 'sunflower_class_demo_v04';
+  const ACTIVITY_MS = 30_000;
+  const GAME_SECONDS = 90;
+  const FOOD_TYPES = ['体力', '猫粮', '勾玉', '金币'];
+  const RANKS = [
+    { name: '答应', radius: 15, font: 12 },
+    { name: '常在', radius: 19, font: 14 },
+    { name: '贵人', radius: 24, font: 16 },
+    { name: '嫔', radius: 30, font: 20 },
+    { name: '妃', radius: 37, font: 24 },
+    { name: '贵妃', radius: 45, font: 28 },
+    { name: '皇贵妃', radius: 54, font: 28 },
+    { name: '皇后', radius: 64, font: 36 },
+  ];
+
+  const defaultState = () => ({
+    growth: 0,
+    maxQueue: 3,
+    queue: [],
+    active: null,
+    foods: [],
+    hasEaten: false,
+    leftovers: 0,
+    atmosphere: 0,
+    dottedUnlocked: false,
+    minigameUnlocked: false,
+    surplusNoticeShown: false,
+    surplusNoticePending: false,
+  });
+
+  let state = loadState();
+  const $ = (id) => document.getElementById(id);
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? { ...defaultState(), ...JSON.parse(raw) } : defaultState();
+    } catch {
+      return defaultState();
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+      // Some browsers restrict localStorage for pages opened through file://.
+      // The game should remain fully playable during the current session.
+      console.warn('存档不可用，本次将以临时模式运行。', error);
+    }
+  }
+
+  function activityLabel(type) {
+    if (type === 'liked') return 'QAQ丨喜欢的游戏';
+    if (type === 'watch') return '让他看我玩';
+    return '阴阳师';
+  }
+
+  function enqueue(type) {
+    const total = state.queue.length + (state.active ? 1 : 0);
+    if (total >= state.maxQueue || state.dottedUnlocked) return;
+    state.queue.push({ type });
+    if (type === 'watch') state.minigameUnlocked = true;
+    startNextIfNeeded();
+    saveState();
+    render();
+  }
+
+  function startNextIfNeeded() {
+    if (!state.active && state.queue.length > 0) {
+      const next = state.queue.shift();
+      state.active = { type: next.type, startedAt: Date.now(), endsAt: Date.now() + ACTIVITY_MS };
+    }
+  }
+
+  function processActivities() {
+    let changed = false;
+    const now = Date.now();
+    while (state.active && now >= state.active.endsAt) {
+      completeActivity(state.active.type);
+      state.active = null;
+      startNextIfNeeded();
+      changed = true;
+    }
+    if (changed) {
+      checkUnlock();
+      saveState();
+      render();
+    }
+  }
+
+  function addLeftovers(amount) {
+    if (amount <= 0) return;
+    const wasZero = state.leftovers === 0;
+    state.leftovers += amount;
+    if (wasZero && !state.surplusNoticeShown) {
+      state.surplusNoticePending = true;
+    }
+  }
+
+  function completeActivity(type) {
+    if (type === 'liked') {
+      state.growth += 1;
+      if (state.growth >= 3) state.maxQueue = 4;
+    } else if (type === 'onmyoji') {
+      const food = FOOD_TYPES[Math.floor(Math.random() * FOOD_TYPES.length)];
+      if (state.hasEaten) addLeftovers(1);
+      else state.foods.push(food);
+    }
+  }
+
+  function eatOne() {
+    if (state.hasEaten || state.foods.length === 0) return;
+    state.foods.shift();
+    state.hasEaten = true;
+    if (state.foods.length > 0) {
+      addLeftovers(state.foods.length);
+      state.foods = [];
+    }
+    checkUnlock();
+    saveState();
+    render();
+  }
+
+  function checkUnlock() {
+    if (!state.dottedUnlocked && state.atmosphere >= 3 && state.leftovers >= 1) {
+      state.dottedUnlocked = true;
+      state.queue = [];
+      state.active = null;
+      saveState();
+    }
+  }
+
+  function render() {
+    $('growthValue').textContent = `${Math.min(state.growth, 3)} / 3`;
+    $('capacityValue').textContent = `${state.maxQueue}次`;
+    $('leftoverValue').textContent = String(state.leftovers);
+    $('surplusModal').classList.toggle('hidden', !state.surplusNoticePending);
+    $('endingModal').classList.toggle('hidden', !state.dottedUnlocked || state.surplusNoticePending);
+    $('minigameCard').classList.toggle('hidden', !state.minigameUnlocked);
+
+    if (state.active) {
+      $('statusBadge').textContent = '游戏中';
+      $('statusText').textContent = `正在玩：${activityLabel(state.active.type)}`;
+    } else if (state.dottedUnlocked) {
+      $('statusBadge').textContent = '试玩完成';
+      $('statusText').textContent = '点点来了。';
+    } else {
+      $('statusBadge').textContent = '待机';
+      $('statusText').textContent = '可以安排他去玩游戏。';
+    }
+
+    const list = $('queueList');
+    list.innerHTML = '';
+    const entries = [];
+    if (state.active) entries.push({ label: activityLabel(state.active.type), active: true });
+    entries.push(...state.queue.map((q) => ({ label: activityLabel(q.type), active: false })));
+    if (entries.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = '队列为空';
+      li.className = 'muted';
+      list.appendChild(li);
+    } else {
+      entries.forEach((entry) => {
+        const li = document.createElement('li');
+        li.textContent = entry.active ? `${entry.label}（进行中）` : entry.label;
+        list.appendChild(li);
+      });
+    }
+
+    const total = state.queue.length + (state.active ? 1 : 0);
+    $('addLikedBtn').disabled = total >= state.maxQueue || state.dottedUnlocked;
+    $('addOnmyojiBtn').disabled = total >= state.maxQueue || state.dottedUnlocked;
+    $('addWatchBtn').disabled = total >= state.maxQueue || state.dottedUnlocked;
+    $('clearQueueBtn').disabled = state.queue.length === 0;
+
+    $('foodEmpty').classList.toggle('hidden', state.foods.length > 0);
+    $('foodPanel').classList.toggle('hidden', state.foods.length === 0 || state.hasEaten);
+    $('eatenNote').classList.toggle('hidden', !state.hasEaten);
+    $('foodList').innerHTML = state.foods.map((f) => `<span class="food-chip">${f}</span>`).join('');
+    $('eatBtn').disabled = state.foods.length === 0 || state.hasEaten;
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const wrap = $('activeProgressWrap');
+    if (!state.active) {
+      wrap.classList.add('hidden');
+      return;
+    }
+    wrap.classList.remove('hidden');
+    const now = Date.now();
+    const remain = Math.max(0, state.active.endsAt - now);
+    const elapsed = ACTIVITY_MS - remain;
+    $('activeLabel').textContent = activityLabel(state.active.type);
+    $('countdownValue').textContent = `${Math.ceil(remain / 1000)}秒`;
+    $('progressBar').style.width = `${Math.min(100, elapsed / ACTIVITY_MS * 100)}%`;
+  }
+
+  $('addLikedBtn').addEventListener('click', () => enqueue('liked'));
+  $('addOnmyojiBtn').addEventListener('click', () => enqueue('onmyoji'));
+  $('addWatchBtn').addEventListener('click', () => enqueue('watch'));
+  $('clearQueueBtn').addEventListener('click', () => {
+    state.queue = [];
+    saveState();
+    render();
+  });
+  $('eatBtn').addEventListener('click', eatOne);
+  $('surplusCloseBtn').addEventListener('click', () => {
+    state.surplusNoticePending = false;
+    state.surplusNoticeShown = true;
+    saveState();
+    render();
+  });
+
+  $('resetBtn').addEventListener('click', () => {
+    if (!confirm('确定要清除试玩存档吗？')) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    location.reload();
+  });
+
+  // ===== 文字合成小游戏 =====
+  const canvas = $('mergeCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const WARNING_Y = 70;
+  const gravity = 0.34;
+  const restitution = 0.08;
+  const friction = 0.985;
+  let bodies = [];
+  let gameRunning = false;
+  let gameEnded = false;
+  let gameEndAt = 0;
+  let currentLevel = 0;
+  let nextLevel = 1;
+  let dropX = W / 2;
+  let bestLevel = -1;
+  let lastDropAt = 0;
+  let dangerSince = null;
+  let animationId = null;
+
+  function randomDropLevel() {
+    const r = Math.random();
+    return r < .50 ? 0 : r < .85 ? 1 : 2;
+  }
+
+  function resetMiniGame() {
+    bodies = [];
+    gameRunning = true;
+    gameEnded = false;
+    gameEndAt = performance.now() + GAME_SECONDS * 1000;
+    currentLevel = randomDropLevel();
+    nextLevel = randomDropLevel();
+    dropX = W / 2;
+    bestLevel = -1;
+    dangerSince = null;
+    $('gameOverlay').classList.add('hidden');
+    $('startGameBtn').disabled = true;
+    $('dropBtn').disabled = false;
+    updateMiniUI();
+    if (animationId) cancelAnimationFrame(animationId);
+    animationId = requestAnimationFrame(gameLoop);
+  }
+
+  function dropCurrent() {
+    if (!gameRunning || performance.now() - lastDropAt < 350) return;
+    const rank = RANKS[currentLevel];
+    const x = Math.max(rank.radius + 3, Math.min(W - rank.radius - 3, dropX));
+    bodies.push({
+      x, y: 20 + rank.radius, vx: 0, vy: 0,
+      level: currentLevel, r: rank.radius,
+      merging: false, born: performance.now(),
+    });
+    bestLevel = Math.max(bestLevel, currentLevel);
+    currentLevel = nextLevel;
+    nextLevel = randomDropLevel();
+    lastDropAt = performance.now();
+    updateMiniUI();
+  }
+
+  function updateMiniUI() {
+    $('currentRank').textContent = RANKS[currentLevel]?.name || '—';
+    $('nextRank').textContent = RANKS[nextLevel]?.name || '—';
+    $('bestRankText').textContent = bestLevel >= 0 ? RANKS[bestLevel].name : '—';
+  }
+
+  function rewardForLevel(level) {
+    if (level >= 7) return 3;
+    if (level >= 6) return 2;
+    if (level >= 5) return 1;
+    return 0;
+  }
+
+  function resolvePhysics() {
+    for (const b of bodies) {
+      b.vy += gravity;
+      b.vx *= friction;
+      b.vy *= .997;
+      b.x += b.vx;
+      b.y += b.vy;
+      if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx) * restitution; }
+      if (b.x + b.r > W) { b.x = W - b.r; b.vx = -Math.abs(b.vx) * restitution; }
+      if (b.y + b.r > H) { b.y = H - b.r; b.vy = -Math.abs(b.vy) * restitution; b.vx *= .92; }
+    }
+
+    const mergePairs = [];
+    for (let i = 0; i < bodies.length; i++) {
+      for (let j = i + 1; j < bodies.length; j++) {
+        const a = bodies[i], b = bodies[j];
+        if (a.merging || b.merging) continue;
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const dist = Math.hypot(dx, dy) || .001;
+        const minDist = a.r + b.r;
+        if (dist >= minDist) continue;
+        const nx = dx / dist, ny = dy / dist;
+        const overlap = minDist - dist;
+        a.x -= nx * overlap * .5;
+        a.y -= ny * overlap * .5;
+        b.x += nx * overlap * .5;
+        b.y += ny * overlap * .5;
+        const rel = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+        if (rel < 0) {
+          const impulse = -(1 + restitution) * rel * .5;
+          a.vx -= impulse * nx; a.vy -= impulse * ny;
+          b.vx += impulse * nx; b.vy += impulse * ny;
+        }
+        if (a.level === b.level && a.level < RANKS.length - 1 && performance.now() - a.born > 180 && performance.now() - b.born > 180) {
+          a.merging = b.merging = true;
+          mergePairs.push([a, b]);
+        }
+      }
+    }
+
+    for (const [a, b] of mergePairs) {
+      if (!bodies.includes(a) || !bodies.includes(b)) continue;
+      bodies = bodies.filter((x) => x !== a && x !== b);
+      const level = a.level + 1;
+      const rank = RANKS[level];
+      bodies.push({
+        x: (a.x + b.x) / 2,
+        y: (a.y + b.y) / 2,
+        vx: (a.vx + b.vx) * .25,
+        vy: Math.min(-1.2, (a.vy + b.vy) * .15 - .8),
+        level, r: rank.radius, merging: false, born: performance.now(),
+      });
+      bestLevel = Math.max(bestLevel, level);
+      if (level === 7) {
+        endMiniGame('合成皇后');
+        return;
+      }
+    }
+  }
+
+  function checkDanger(now) {
+    const dangerous = bodies.some((b) => b.y - b.r < WARNING_Y && Math.abs(b.vy) < 1.3 && now - b.born > 900);
+    if (dangerous) {
+      if (dangerSince == null) dangerSince = now;
+      if (now - dangerSince >= 1500) endMiniGame('超过警戒线');
+    } else {
+      dangerSince = null;
+    }
+  }
+
+  function drawGame() {
+    ctx.clearRect(0, 0, W, H);
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#fff2dc');
+    bg.addColorStop(.48, '#f8e9f3');
+    bg.addColorStop(1, '#e7edf9');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+    ctx.save();
+    ctx.setLineDash([8, 7]);
+    ctx.strokeStyle = dangerSince ? '#a33b35' : '#c99183';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, WARNING_Y); ctx.lineTo(W, WARNING_Y); ctx.stroke();
+    ctx.restore();
+
+    if (gameRunning) {
+      const rank = RANKS[currentLevel];
+      ctx.strokeStyle = 'rgba(117,51,46,.45)';
+      ctx.beginPath(); ctx.moveTo(dropX, 0); ctx.lineTo(dropX, 45); ctx.stroke();
+      drawBody({ x: dropX, y: 25, r: rank.radius, level: currentLevel }, .42);
+    }
+    for (const body of bodies) drawBody(body, 1);
+  }
+
+  function drawBody(body, alpha) {
+    const rank = RANKS[body.level];
+    const palette = ['#f6c85f', '#ef8f6b', '#e16b8c', '#b56cc2', '#7286d3', '#4ca7a5', '#6f8f4e', '#8a4b63'];
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.arc(body.x, body.y, body.r, 0, Math.PI * 2);
+    ctx.fillStyle = palette[body.level];
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#4e3433';
+    ctx.stroke();
+    ctx.fillStyle = body.level >= 5 ? '#fff8f0' : '#372928';
+    ctx.font = `700 ${rank.font}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(rank.name, body.x, body.y + 1);
+    ctx.restore();
+  }
+
+  function gameLoop(now) {
+    if (!gameRunning) { drawGame(); return; }
+    const remain = Math.max(0, gameEndAt - now);
+    $('gameTimer').textContent = String(Math.ceil(remain / 1000));
+    resolvePhysics();
+    checkDanger(now);
+    updateMiniUI();
+    drawGame();
+    if (gameRunning && remain <= 0) endMiniGame('时间到');
+    if (gameRunning) animationId = requestAnimationFrame(gameLoop);
+  }
+
+  function endMiniGame(reason) {
+    if (!gameRunning) return;
+    gameRunning = false;
+    gameEnded = true;
+    const reward = rewardForLevel(bestLevel);
+    state.atmosphere += reward;
+    checkUnlock();
+    saveState();
+    render();
+    $('dropBtn').disabled = true;
+    $('startGameBtn').disabled = false;
+    $('startGameBtn').textContent = '再玩一次';
+    $('gameOverlay').classList.remove('hidden');
+    $('overlayTitle').textContent = bestLevel >= 0 ? `最高位份：${RANKS[bestLevel].name}` : '本局结束';
+    $('overlayText').textContent = reason;
+    $('gameTimer').textContent = '0';
+    drawGame();
+  }
+
+  function canvasXFromEvent(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    return (clientX - rect.left) * (W / rect.width);
+  }
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!gameRunning) return;
+    dropX = canvasXFromEvent(e);
+  });
+  canvas.addEventListener('pointerdown', (e) => {
+    if (!gameRunning) return;
+    dropX = canvasXFromEvent(e);
+    dropCurrent();
+  });
+  $('dropBtn').addEventListener('click', dropCurrent);
+  $('startGameBtn').addEventListener('click', resetMiniGame);
+
+  drawGame();
+  render();
+  processActivities();
+  setInterval(() => {
+    processActivities();
+    updateProgress();
+  }, 200);
+})();
+
+</script>
+</body>
+</html>
