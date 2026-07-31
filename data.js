@@ -17,7 +17,7 @@ const GAME_DATA = {
     { id:"taoba", name:"桃爸", icon:"桃", trait:"有保护欲，习惯先确认所有人是否安全。", likes:"照顾人、修理东西、被托付" },
     { id:"puff", name:"泡芙", icon:"芙", trait:"情绪写在脸上，开心和委屈都来得快，真诚得没有死角。", likes:"甜食、夸奖、一起完成小目标" },
     { id:"huan", name:"欢佬", icon:"欢", trait:"看起来很会摸鱼，关键时刻却总能提出最省力的办法。", likes:"轻松氛围、聪明捷径、不被催" },
-    { id:"xizhou", name:"西洲", icon:"洲", trait:"平时不太主动凑热闹，家里条件很好，对喜欢的人和班级很慷慨；说话常常一针见血，但通常只是嫌别人绕弯子。", likes:"安静待着、真正有用的东西、不拖泥带水的做法" },
+    { id:"xizhou", name:"西洲", icon:"洲", trait:"最近常跟家长外出，来园次数很少；只要出现就很会聊天，对亲近的人格外大方，遇到大家不敢指出的问题会直接开口。", likes:"热闹聊天、好吃的点心、舞台表演、把问题说清楚" },
     { id:"latiao", name:"辣条", icon:"辣", trait:"说话直接，热情也直接，最讨厌大家有话不说。", likes:"坦率沟通、热闹活动、共同吐槽" },
     { id:"cutie", name:"小可爱", icon:"爱", trait:"擅长调节气氛，但并不只是负责可爱，也有很强的坚持。", likes:"合作、纪念品、认真对待承诺" }
   ],
@@ -49,16 +49,16 @@ const GAME_DATA = {
       choices:[
         { text:"按时间顺序询问所有人", effects:{stats:{order:2}, bonds:{taoba:2,niko:1}}, flags:["careful_search"], result:"你发现班牌不是被偷，而是被夹进了晾干的海报里。妮蔻对你的调查方式很满意。" },
         { text:"先安慰泡芙，再一起重新做一个", effects:{stats:{kindness:2,creativity:1}, bonds:{puff:3,huahua:1}}, result:"旧班牌后来找到了，但泡芙坚持把你们做的新班牌也挂起来。" },
-        { text:"宣布谁找到就请谁吃点心", effects:{stats:{courage:1}, bonds:{momo:2,diandian:1,huan:1}}, result:"全班搜索效率突然提高。馍馍提醒你，下次最好先确认点心预算。" }
+        { text:"宣布谁找到就请谁吃点心", effects:{stats:{courage:1}, bonds:{momo:2,diandian:1,huan:1}}, result:"大家一下子更有精神了。馍馍提醒你，下次要先问清楚点心够不够分。" }
       ]
     },
     {
-      id:"lunch", day:[3,5], title:"午饭交换会", characters:["momo","latiao","cutie"],
-      text:"馍馍提出交换一口午饭。辣条直接把最辣的那份推过来，小可爱则认真询问每个人的忌口。",
+      id:"lunch", day:[3,5], title:"午饭盒里的颜色", characters:["momo","latiao","cutie"],
+      text:"午饭时间，小可爱把主食、蔬菜和水果摆得整整齐齐。馍馍想到什么就说什么，忽然问辣条是不是最喜欢辣味。辣条立刻回答：‘名字是名字，我又没答应一定要吃辣。’",
       choices:[
-        { text:"组织一张忌口与偏好表", effects:{stats:{order:2,kindness:1}, bonds:{momo:2,cutie:2}}, flags:["food_list"], result:"后来每次班级聚餐，这张表都会被拿出来更新。" },
-        { text:"挑战辣条的特辣饭团", effects:{stats:{courage:2}, bonds:{latiao:3,moto:1}}, result:"你坚持吃完了，但下午一直在找水。辣条正式把你列入“能一起冒险的人”。" },
-        { text:"只交换自己最喜欢的一口", effects:{stats:{kindness:1}, bonds:{qaq:1,momo:1,puff:1,cutie:1}}, result:"你没有吃到最多，却记住了四个人最舍不得分享的味道。" }
+        { text:"和小可爱一起数今天有几种颜色", effects:{stats:{order:1,kindness:1}, bonds:{cutie:3,momo:1}}, flags:["lunch_colors"], result:"大家发现颜色最多的不一定吃得最多。小可爱只调整自己的饭盒，没有要求别人照她那样摆。" },
+        { text:"请辣条说说自己真正喜欢的味道", effects:{stats:{kindness:1}, bonds:{latiao:3,momo:1}}, result:"辣条认真说了几个甜味点心，最后提醒馍馍：名字不能替别人回答问题。馍馍很快点头，又去问下一个话题。" },
+        { text:"把饭盒颜色画成今天的色卡", effects:{stats:{creativity:2}, bonds:{momo:2,cutie:2}}, result:"色卡里有米饭的白、番茄的红和叶菜的绿。下午做手工时，大家真的用上了这组颜色。" }
       ]
     },
     {
@@ -67,16 +67,16 @@ const GAME_DATA = {
       choices:[
         { text:"坚持制定公平而完整的规则", effects:{stats:{order:2}, bonds:{moto:2,xizhou:1}}, flags:["fair_rules"], result:"比赛进行得很顺利，蘑托车虽然输了，却承认规则没有问题。" },
         { text:"接受欢佬的三分钟极速版本", effects:{stats:{creativity:1}, bonds:{huan:3,diandian:1}}, flags:["shortcut"], result:"三分钟后全班都加入了，唯一的问题是没人能解释最终比分。" },
-        { text:"和QAQ丨完善手绘赛道", effects:{stats:{creativity:2}, bonds:{qaq:3,huahua:1}}, flags:["paper_track"], result:"你们画出的赛道后来被贴在墙上，成为活动周的第一个正式项目。" }
+        { text:"和QAQ丨完善手绘赛道", effects:{stats:{creativity:2}, bonds:{qaq:3,huahua:1}}, flags:["paper_track"], result:"你们画出的赛道后来被贴在墙上，成为开放日最早完成的一块游戏板。" }
       ]
     },
     {
       id:"week_plan", day:[6,7], title:"开放日玩什么", characters:["diandian","huahua","xizhou"],
       text:"点点想办热闹的闯关游戏，花花想把教室布置成故事角，西洲提醒大家准备时间只有几天。大家越说越认真，差点忘了原本只是想做一件好玩的事。",
       choices:[
-        { text:"把两种方案合成“故事闯关”", effects:{stats:{creativity:2,courage:1}, bonds:{diandian:2,huahua:2}}, flags:["story_fair"], result:"方案更复杂了，但所有人的眼睛都亮了起来。西洲要求你们当天写出任务清单。" },
+        { text:"把两种方案合成“故事闯关”", effects:{stats:{creativity:2,courage:1}, bonds:{diandian:2,huahua:2}}, flags:["story_fair"], result:"方案更复杂了，但所有人的眼睛都亮了起来。西洲让大家把要做的事画成几张小卡片，免得第二天又忘记。" },
         { text:"选择更容易完成的故事展", effects:{stats:{order:2}, bonds:{huahua:3,xizhou:2}}, flags:["story_show"], result:"点点有点失望，不过在你邀请她负责互动环节后，她重新投入了准备。" },
-        { text:"先做小型测试，再决定规模", effects:{stats:{order:1,creativity:1}, bonds:{xizhou:3,niko:1}}, flags:["prototype"], result:"测试暴露了很多问题，也让大家第一次相信缩小范围不是退缩。" }
+        { text:"先让几个人试玩，再决定要做多大", effects:{stats:{order:1,creativity:1}, bonds:{xizhou:3,niko:1}}, flags:["prototype"], result:"试玩时发现了几个不好玩的地方，大家也明白少做一点并不等于不好。" }
       ]
     },
     {
@@ -92,7 +92,7 @@ const GAME_DATA = {
       id:"missing_moto", day:[8,10], title:"蘑托车突然退出", characters:["moto","taoba","qaq"],
       text:"蘑托车连续输了三次试跑，小脸一下子垮了，丢下一句“这个不好玩”就跑出了教室。桃爸准备去找他，QAQ丨却说现在追上去只会吵起来。",
       choices:[
-        { text:"立刻追出去，直接问他到底怎么了", effects:{stats:{courage:2}, bonds:{moto:3,latiao:1}}, result:"蘑托车先说没事，后来承认他害怕正式活动时拖累大家。你们约定再练一次，只记录自己的进步。" },
+        { text:"立刻追出去，直接问他到底怎么了", effects:{stats:{courage:2}, bonds:{moto:3,latiao:1}}, result:"蘑托车先说没事，后来承认她担心开放日那天自己玩不好会扫兴。你们约定再练一次，只和自己上一次比较。" },
         { text:"先调整赛道，再邀请他回来测试", effects:{stats:{order:1,kindness:1}, bonds:{qaq:2,moto:2}}, result:"新赛道保留了难度，却不再依赖运气。蘑托车回来后什么也没解释，只认真跑完了十次。" },
         { text:"让桃爸去找，自己继续推进准备", effects:{stats:{order:2}, bonds:{taoba:2,xizhou:1,moto:-1}}, result:"桃爸把人带了回来，但你和蘑托车之间多了一点没有说开的距离。" }
       ]
@@ -110,7 +110,7 @@ const GAME_DATA = {
       id:"power_cut", day:[12,12], title:"暴雨天的大慌张", characters:["taoba","xizhou","momo","huahua"],
       text:"材料角的积水慢慢靠近纸道具，教室里也暗了下来。大家都在同时说办法，一时间反而不知道该先做什么。",
       choices:[
-        { text:"先确认人员安全，再分组抢救材料", require:{stat:"order",min:5}, effects:{stats:{order:2,kindness:1}, bonds:{taoba:3,xizhou:3,momo:1}}, flags:["storm_leader"], result:"你写下三项优先顺序。桃爸检查安全，西洲分配工具，馍馍把干毛巾送到每组。损失比预想少得多。" },
+        { text:"先听老师安排，再一起把纸道具搬高", require:{stat:"order",min:5}, effects:{stats:{order:2,kindness:1}, bonds:{taoba:3,xizhou:3,momo:1}}, flags:["storm_leader"], result:"老师先让大家离开积水边。桃爸检查哪些东西还能搬，西洲直接叫大家别一起喊，馍馍把干毛巾一条条送过去。最后只湿了几张彩纸。" },
         { text:"先把最难重做的背景板搬走", effects:{stats:{courage:1,creativity:1}, bonds:{huahua:3,puff:1}}, flags:["saved_art"], result:"你和花花踩着积水抬走背景板。其他材料损失了一些，但核心场景保住了。" },
         { text:"用桌椅和塑料布临时挡水", effects:{stats:{creativity:2,order:1}, bonds:{huan:2,moto:2,taoba:1}}, flags:["water_wall"], result:"欢佬找到最省力的搭法，蘑托车负责搬桌子。那道歪歪扭扭的防线竟然坚持到了雨停。" }
       ]
@@ -121,14 +121,14 @@ const GAME_DATA = {
       choices:[
         { text:"公开回复：活动失败也不等于关系结束", effects:{stats:{kindness:2,courage:1}, bonds:{puff:2,cutie:2,qaq:1}}, flags:["public_reply"], result:"第二天，信箱里多了许多回复。有人写“会一起重做”，有人写“失败以后可以先吃饭”。" },
         { text:"请QAQ丨把回复交给写信的人", effects:{stats:{kindness:2}, bonds:{qaq:3,puff:1}}, flags:["private_reply"], result:"QAQ丨没有告诉你作者是谁。放学时，他只说：已经收到了，而且有用。" },
-        { text:"把担心变成一次全班风险讨论", effects:{stats:{order:2}, bonds:{xizhou:2,cutie:1,latiao:1}}, result:"大家列出最坏情况与替代方案。气氛并不轻松，但从那以后，没人再把失败当成不能说的话。" }
+        { text:"请大家一起想“如果下雨还能怎么玩”", effects:{stats:{order:2}, bonds:{xizhou:2,cutie:1,latiao:1}}, result:"大家想出了停电时玩手影、下雨时玩猜声音。担心没有完全消失，但至少变成了可以一起准备的小办法。" }
       ]
     },
     {
       id:"credit", day:[14,16], title:"谁做得最多", characters:["latiao","huan","xizhou"],
       text:"快完成时，辣条发现很多帮忙的小事没人记得是谁做的。有人觉得没关系，西洲却说总是这样，会让最认真帮忙的小朋友最先委屈。",
       choices:[
-        { text:"补记每个人的贡献，也记录互相帮助", effects:{stats:{order:2,kindness:1}, bonds:{xizhou:3,latiao:2,cutie:1}}, flags:["credit_board"], result:"贡献板没有变成排名，反而让很多不起眼的工作第一次被看见。" },
+        { text:"把每个人帮过什么画在向日葵花瓣上", effects:{stats:{order:2,kindness:1}, bonds:{xizhou:3,latiao:2,cutie:1}}, flags:["credit_board"], result:"花瓣墙没有变成比赛，反而让很多平时没人注意的小帮忙被大家看见。" },
         { text:"大家共同完成，不再区分个人", effects:{stats:{kindness:1}, bonds:{huan:2,puff:1,xizhou:-1}}, result:"争论暂时结束，但西洲把自己剩下的任务悄悄划掉了两项。" },
         { text:"请每个人说出最感谢的一位同学", effects:{stats:{kindness:2,courage:1}, bonds:{latiao:2,huan:1,xizhou:1}}, flags:["thanks_circle"], result:"最初没人愿意开口。辣条第一个说完后，感谢逐渐具体到每一卷胶带和每一次等待。" }
       ]
@@ -137,9 +137,9 @@ const GAME_DATA = {
       id:"final_rehearsal", day:[16,17], title:"最后一次彩排", characters:["diandian","moto","huahua","qaq"],
       text:"彩排在最后一关卡住了。时间只剩一晚：可以删掉结尾保证稳定，也可以继续修到最后。",
       choices:[
-        { text:"删掉复杂结尾，保证所有参与者都能完成", effects:{stats:{order:2}, bonds:{xizhou:2,taoba:1,cutie:1}}, flags:["safe_finale"], result:"成品少了一点惊喜，却运行得非常顺畅。西洲说，完成本身也是一种诚意。" },
-        { text:"保留结尾，全班一起修到能运行", require:{stat:"energy",min:2}, effects:{stats:{courage:2,creativity:1}, energy:-2, bonds:{diandian:2,moto:2,huahua:2}}, flags:["true_finale"], result:"你们试了十七次。第十八次，最后一盏纸灯终于按顺序亮起，全班安静了一秒，然后一起欢呼。" },
-        { text:"让QAQ丨提出最小改动方案", effects:{stats:{creativity:1,order:1}, bonds:{qaq:3,huan:1}}, flags:["qaq_solution"], result:"QAQ丨删掉了一个没人注意的步骤，整个流程突然连通。他说自己只是“不想再试第十八次”。" }
+        { text:"删掉复杂结尾，保证所有参与者都能完成", effects:{stats:{order:2}, bonds:{xizhou:2,taoba:1,cutie:1}}, flags:["safe_finale"], result:"最后一段少了一点花样，却让每个小朋友都能顺利玩完。西洲说，能好好玩到最后已经很不错。" },
+        { text:"保留结尾，全班一起试到它能顺利玩", require:{stat:"energy",min:2}, effects:{stats:{courage:2,creativity:1}, energy:-2, bonds:{diandian:2,moto:2,huahua:2}}, flags:["true_finale"], result:"你们试了十七次。第十八次，最后一盏纸灯终于按顺序亮起，全班安静了一秒，然后一起欢呼。" },
+        { text:"让QAQ丨提出最小改动方案", effects:{stats:{creativity:1,order:1}, bonds:{qaq:3,huan:1}}, flags:["qaq_solution"], result:"QAQ丨删掉了一个没人注意的步骤，整个游戏顺序突然顺了。他说自己只是“不想再试第十八次”。" }
       ]
     },
     {
@@ -147,15 +147,15 @@ const GAME_DATA = {
       text:"开放日终于开始了。有人在门口紧张得把欢迎词说错，有人在隐藏角落里笑得前仰后合，也有人玩完还想再来一次。你站在教室中央，忽然觉得这里已经很像自己的教室了。",
       choices:[
         { text:"留在入口，照顾第一次参加的人", effects:{stats:{kindness:2}, bonds:{cutie:2,momo:2,taoba:1}}, flags:["final_host"] , result:"你没有体验完整活动，却记住了许多参与者放松下来的表情。" },
-        { text:"到最混乱的关卡现场救火", effects:{stats:{courage:1,order:1}, bonds:{moto:2,diandian:2,latiao:1}}, flags:["final_rescue"], result:"你一整天都在奔跑。闭馆后，蘑托车把冠军贴纸贴在了你的袖口上。" },
-        { text:"悄悄走完整条故事路线", effects:{stats:{creativity:1,kindness:1}, bonds:{qaq:2,huahua:2,niko:1}}, flags:["final_witness"], result:"你看见每个人的工作如何接在一起。最后一张纸条上写着：『欢迎来到向日葵中班。』" }
+        { text:"到最混乱的关卡现场救火", effects:{stats:{courage:1,order:1}, bonds:{moto:2,diandian:2,latiao:1}}, flags:["final_rescue"], result:"你一整天都在奔跑。活动结束后，蘑托车把冠军贴纸贴在了你的袖口上。" },
+        { text:"悄悄走完整条故事路线", effects:{stats:{creativity:1,kindness:1}, bonds:{qaq:2,huahua:2,niko:1}}, flags:["final_witness"], result:"你看见每个人做的小东西怎样接在一起。最后一张纸条上写着：『欢迎来到向日葵中班。』" }
       ]
     }
   ],
   followups: [
     {
       id:"truth_after_hidden", day:[10,13], requireFlag:"hidden_mistake", title:"没有说开的责任", characters:["huahua","puff"],
-      text:"花花发现收纳记录不对，已经猜到颜料是谁打翻的。泡芙问你，现在还要不要说实话。",
+      text:"花花发现颜料盒的位置不对，已经猜到颜料是谁打翻的。泡芙问你，现在还要不要说实话。",
       choices:[
         { text:"陪泡芙一起坦白", effects:{stats:{courage:1,kindness:1}, bonds:{huahua:3,puff:2}}, flags:["repaired_trust"], result:"花花真正介意的不是颜料，而是自己被排除在真相之外。三个人一起重做了收纳规则。" },
         { text:"继续保守秘密", effects:{bonds:{puff:1,huahua:-2}}, result:"秘密没有被揭穿，但之后花花不再把重要材料交给你保管。" }
@@ -163,7 +163,7 @@ const GAME_DATA = {
     },
     {
       id:"track_return", day:[13,16], requireFlag:"paper_track", title:"被雨泡皱的赛道", characters:["qaq","moto"],
-      text:"最初画的纸赛道被雨水泡皱。QAQ丨准备扔掉，蘑托车却说它是第一个正式项目。",
+      text:"最初画的纸赛道被雨水泡皱。QAQ丨准备扔掉，蘑托车却说它是最早画好的游戏板。",
       choices:[
         { text:"把皱纹改成赛道地形", effects:{stats:{creativity:2}, bonds:{qaq:2,moto:2}}, flags:["kept_track"], result:"最终展览里，那张不平整的纸成为最受欢迎的纪念品之一。" },
         { text:"扫描保存后重新画一张", effects:{stats:{order:2}, bonds:{qaq:1,xizhou:1}}, result:"新赛道更清楚，旧赛道则被收进班级档案盒。" }
@@ -179,7 +179,7 @@ const GAME_DATA = {
     },
     {
       id:"shortcut_cost", day:[11,14], requireFlag:"shortcut", title:"捷径留下的问题", characters:["huan","xizhou"],
-      text:"欢佬设计的快速计分法在多人测试时失效。西洲没有责怪他，只问今晚谁来补记录。",
+      text:"欢佬设计的快速计分法在多人测试时失效。西洲没有责怪他，只问今晚谁来把漏掉的贴纸和分数补上。",
       choices:[
         { text:"和欢佬一起补完规则", effects:{stats:{order:2}, bonds:{huan:3,xizhou:1}}, result:"欢佬一边抱怨一边把漏洞全部补上，最后承认“省力也要省得负责”。" },
         { text:"改回最初的完整规则", effects:{stats:{order:1}, bonds:{xizhou:2,huan:-1}}, result:"问题解决了，但欢佬明显觉得自己的尝试被全盘否定。" }
@@ -238,9 +238,9 @@ GAME_DATA.events.push(
     id:"rumor", day:[7,11], title:"“开放日会不会办不成？”", characters:["latiao","niko","puff"],
     text:"不知道谁说老师觉得大家准备得太慢，开放日可能要缩小规模。消息传了一圈后，已经变成“开放日要取消了”。",
     choices:[
-      {text:"找到消息源并公开核实",effects:{stats:{order:2,courage:1},bonds:{latiao:2,niko:1}},flags:["rumor_checked"],result:"原话只是“需要准备取消部分项目的方案”。传言停下了，但大家也开始认真考虑备用计划。"},
+      {text:"去问老师原话到底是什么",effects:{stats:{order:2,courage:1},bonds:{latiao:2,niko:1}},flags:["rumor_checked"],result:"老师原本只说“下雨时有几个游戏可能要换地方”。传言停下了，大家也开始准备室内玩法。"},
       {text:"先安抚大家，等正式通知",effects:{stats:{kindness:2},bonds:{puff:2,momo:1}},result:"情绪稳定了，不过半天后仍有人不断来问你是否知道内幕。"},
-      {text:"顺势组织一次最坏情况演练",effects:{stats:{order:1,courage:1},bonds:{xizhou:2,huan:1}},flags:["backup_plan"],result:"取消传言是假的，备用方案却在之后真正救了你们一次。"}
+      {text:"顺势组织一次下雨天玩法试演",effects:{stats:{order:1,courage:1},bonds:{xizhou:2,huan:1}},flags:["backup_plan"],result:"取消传言是假的，室内玩法却在之后真的派上了用场。"}
     ]
   },
   {
@@ -283,18 +283,18 @@ GAME_DATA.events.push(
     id:"copycat", day:[13,16], title:"隔壁班也做了很像的游戏", characters:["huahua","diandian","niko"],
     text:"隔壁班把开放日的海报贴出来后，大家发现其中几个游戏和你们想的很像。点点怀疑他们偷看过，花花则担心来参观的人会觉得向日葵中班在学别人。",
     choices:[
-      {text:"继续原计划，用完成度证明差异",effects:{stats:{order:1,courage:1},bonds:{huahua:2,xizhou:1}},flags:["kept_identity"],result:"相似的入口后面是完全不同的体验。花花终于相信，想法相似不等于作品相同。"},
+      {text:"继续原计划，用把自己的细节认真做好",effects:{stats:{order:1,courage:1},bonds:{huahua:2,xizhou:1}},flags:["kept_identity"],result:"相似的入口后面是完全不同的体验。花花终于相信，想法相似不等于作品相同。"},
       {text:"临时加入只有本班知道的故事细节",effects:{stats:{creativity:2},bonds:{niko:3,diandian:1}},flags:["secret_lore"],result:"旧纸条、纸赛道和午饭偏好都变成了故事线索。外人看不懂，熟悉的人却不断笑出来。"},
-      {text:"直接去隔壁班询问",effects:{stats:{courage:2},bonds:{diandian:2,latiao:1}},result:"对方也以为是你们参考了他们。两边对照时间后发现，只是同时想到类似方案。"}
+      {text:"直接去隔壁班询问",effects:{stats:{courage:2},bonds:{diandian:2,latiao:1}},result:"对方也以为是你们参考了他们。两边问过老师后发现，只是同时想到类似方案。"}
     ]
   },
   {
     id:"empty_corner", day:[14,17], title:"教室最后空着的一角", characters:["qaq","xizhou","huahua"],
-    text:"大家把主要区域都准备得差不多了，只剩教室后面一小块空地。安排表上没有它，大家也都说自己已经有点累了。",
+    text:"大家把主要区域都准备得差不多了，只剩教室后面一小块空地。布置图上没有它，大家也都说自己已经有点累了。",
     choices:[
-      {text:"保持空白，设置成休息区",effects:{stats:{kindness:2,order:1},bonds:{qaq:2,xizhou:2}},flags:["rest_corner"],result:"开放日当天，这个没有任务的角落坐满了人。它成了少数不用完成什么的地方。"},
+      {text:"保持空白，设置成休息区",effects:{stats:{kindness:2,order:1},bonds:{qaq:2,xizhou:2}},flags:["rest_corner"],result:"开放日当天，这个没有游戏规则的角落坐满了人。它成了少数不用完成什么的地方。"},
       {text:"把本学期失败品集中陈列",effects:{stats:{creativity:2,courage:1},bonds:{huahua:2,niko:2}},flags:["failure_museum"],result:"皱掉的纸、写错的牌子和废弃规则被认真标注。许多人停留得比在成品区更久。"},
-      {text:"最后加一个高难隐藏关",effects:{stats:{courage:1},energy:-1,bonds:{moto:3,diandian:1}},flags:["last_secret"],result:"你们赶在闭馆前调通。只有七个人发现它，其中三个人回来挑战了第二次。"}
+      {text:"最后加一个很难发现的小机关",effects:{stats:{courage:1},energy:-1,bonds:{moto:3,diandian:1}},flags:["last_secret"],result:"你们赶在开放日前试成功了。只有七个人发现它，其中三个人回来挑战了第二次。"}
     ]
   },
   {
@@ -331,12 +331,12 @@ GAME_DATA.followups.push(
     {text:"留在窗边，不把它占为己有",effects:{stats:{kindness:2},bonds:{taoba:2,qaq:1}},result:"第二天羽毛被风吹走了。你们仍然记得它曾经在那里。"}
   ]},
   {id:"backup_used",day:[12,15],requireFlag:"backup_plan",title:"真正用上的备用方案",characters:["xizhou","huan","diandian"],text:"停电后，原来要亮灯和播放的小环节一下子做不了了。那份因为传言而提前准备的“备用小游戏路线”，这时成了最能立刻用上的方案。",choices:[
-    {text:"完整切换到备用流程",effects:{stats:{order:2},bonds:{xizhou:3,huan:1}},flags:["plan_b_saved"],result:"活动规模缩小，却几乎没有停顿。大家第一次真心感谢那场虚惊。"},
+    {text:"把几个游戏改成停电也能玩的版本",effects:{stats:{order:2},bonds:{xizhou:3,huan:1}},flags:["plan_b_saved"],result:"亮灯游戏被换成了手影和猜声音，虽然和原计划不同，大家还是顺利玩了下去。"},
     {text:"只采用其中最关键的部分",effects:{stats:{creativity:1,order:1},bonds:{diandian:2,xizhou:1}},result:"原方案保住了特色，备用方案则接住了最容易失败的地方。"}
   ]},
   {id:"roles_return",day:[14,16],requireFlag:"role_swap",title:"交换回来以后",characters:["diandian","xizhou"],text:"虽然已经换回原来的分工，点点却开始主动把新主意写到安排表上，西洲也会在现场允许临时改动。两个人都假装这和之前互换任务没关系。",choices:[
-    {text:"把新的协作方式写进规则",effects:{stats:{order:2},bonds:{diandian:2,xizhou:2}},flags:["shared_leadership"],result:"规则没有规定谁更重要，只写清了信息必须如何流动。"},
-    {text:"不点破，让默契自然形成",effects:{stats:{kindness:1},bonds:{diandian:2,xizhou:2}},result:"没人宣布和解，但下一次分歧只用了两分钟。"}
+    {text:"把新的合作办法画进布置图",effects:{stats:{order:2},bonds:{diandian:2,xizhou:2}},flags:["shared_leadership"],result:"布置图没有写谁更重要，只画清楚新主意该放在哪里、答应的事情该怎么记住。"},
+    {text:"不点破，让默契自然形成",effects:{stats:{kindness:1},bonds:{diandian:2,xizhou:2}},result:"没人宣布和解，但下一次意见不同时，他们很快就说清楚了。"}
   ]},
   {id:"badge_after",day:[15,17],requireFlag:"bottle_badges",title:"少了一枚瓶盖徽章",characters:["cutie","momo","huan"],text:"徽章全都做好后，大家发现居然还差一枚。最省事的做法，是让负责制作的人自己不要拿。",choices:[
     {text:"拆开两枚重新组合成三枚",effects:{stats:{creativity:2},bonds:{cutie:2,huan:2}},flags:["everyone_badge"],result:"三枚都变得更小，却没有任何人被排除在外。"},
@@ -353,18 +353,20 @@ GAME_DATA.followups.push(
 );
 
 GAME_DATA.endings = [
-  {id:"heart",name:"大家会先来找你",desc:"你成为了班级里最让人安心的存在。很多故事能继续，不是因为你解决了问题，而是因为你让人愿意说出问题。",priority:60,test:s=>s.stats.kindness>=10},
-  {id:"architect",name:"把乱糟糟变成整整齐齐",desc:"你让计划、责任和时间真正接在一起。开放日结束后，大家才发现许多顺利并不是自然发生的。",priority:58,test:s=>s.stats.order>=10},
-  {id:"spark",name:"教室里冒出了好多新点子",desc:"你不断把意外改写成新玩法。这个学期最受欢迎的部分，很多都不在最初方案里。",priority:56,test:s=>s.stats.creativity>=10},
-  {id:"first_step",name:"总要有人先说“我来试试”",desc:"你未必每次都判断正确，却一次次让停滞的事情重新开始。别人后来愿意尝试，也有你的一部分原因。",priority:54,test:s=>s.stats.courage>=10},
-  {id:"shared_class",name:"没有谁被留在故事外面",desc:"你反复选择让不同的人都能参与。向日葵中班没有最整齐的成果，却留下了最完整的一群人。",priority:80,test:s=>s.flags.includes("everyone_badge")&&s.flags.includes("free_photo")&&s.flags.includes("rest_corner")},
-  {id:"true_story",name:"把故事走到了最后一盏灯",desc:"从第一张草图到最后一次亮灯，你没有为了稳定放弃那个最初让大家兴奋的结尾。",priority:78,test:s=>s.flags.includes("true_finale")&&s.flags.includes("final_witness")},
-  {id:"class_archive",name:"这一届留下了自己的传说",desc:"旧游戏、秘密纸条和失败品被你们重新连接。后来的人也许看不懂全部细节，但会知道这里曾发生过很多事。",priority:76,test:s=>s.flags.includes("class_game")&&s.flags.includes("secret_lore")&&s.flags.includes("failure_clues")},
-  {id:"trust_rebuilt",name:"有些关系是在犯错以后开始的",desc:"你没有让秘密永远停留在保护的名义下。坦白很迟，却让信任第一次变得真实。",priority:74,test:s=>s.flags.includes("repaired_trust")&&s.flags.includes("honest_circle")},
-  {id:"quiet_place",name:"给不想向前的人留一把椅子",desc:"你没有要求每个人都热闹、勇敢或高效。那个可以暂时停下来的角落，成了许多人最记得的地方。",priority:72,test:s=>s.flags.includes("quiet_respected")&&s.flags.includes("rest_corner")&&s.flags.includes("respected_blank")},
-  {id:"storm_team",name:"暴雨里没有一个英雄",desc:"你们靠分工、备用方案与共同承担渡过混乱。没有谁独自拯救全班，这正是最可靠的地方。",priority:70,test:s=>s.flags.includes("storm_leader")&&s.flags.includes("plan_b_saved")&&(s.flags.includes("safe_shift")||s.flags.includes("no_martyr"))},
-  {id:"friendship",name:"一个人的学期也可以很完整",desc:"你和一位同学建立了格外深的联系。许多班级大事会淡去，但你们共享的细节不会。",priority:40,test:s=>Math.max(...Object.values(s.bonds))>=12},
-  {id:"ordinary",name:"你在这里留下了自己的位置",desc:"你没有成为所有事情的中心，也没有走出一条可以简单命名的路线。但十八天以后，这间教室里已经有了无法替代你的部分。",priority:0,test:s=>true}
+  {id:"heart",name:"大家愿意把心事告诉你",desc:"这一学期里，你多次选择先听清别人的感受，再决定要不要帮忙。你没有替所有人解决问题，也没有保证每次都能得到好结果；但开放日结束后，大家遇到难开口的事情时，仍会自然地坐到你旁边。这个结局评价的是你在许多小选择里留下的耐心，而不是某一位同学对你的依赖。",priority:0,test:s=>true},
+  {id:"architect",name:"你把混乱变成了可以完成的事",desc:"你经常选择整理顺序、补足缺口、提前准备和确认细节。别人未必总喜欢你的安排，但当材料不够、规则混乱或时间紧张时，你留下的办法让大家还能继续。开放日结束后，教室里没有谁特别夸耀你，可许多顺利都能追溯到你做过的选择。",priority:0,test:s=>true},
+  {id:"spark",name:"你让意外长出了新的玩法",desc:"你没有执着于把所有东西恢复成原计划。画坏的纸、弄乱的规则和临时出现的空位，经常被你改造成另一种玩法。这个学期留下的许多有趣部分，并不是因为你提前想得最周全，而是因为你愿意在事情出错后继续创造。",priority:0,test:s=>true},
+  {id:"first_step",name:"你总愿意先试一次",desc:"当大家都在等别人行动时，你经常选择先开口、先尝试或先承担一次失败。你有时判断正确，也有时把事情弄得更复杂，但许多停住的故事因为你的选择重新开始。开放日结束后，大家记住的不是你每次都成功，而是你很少让害怕成为唯一的答案。",priority:0,test:s=>true},
+  {id:"friendship",name:"你认真留下了一段关系",desc:"这一学期里，你把许多时间和选择集中给了同一个人。你没有因此认识所有同学，也错过了一些集体事件，但你和那个人共享的细节变得越来越多。这个结局并不评价谁更重要，只说明你选择让一段关系慢慢变深。",priority:0,test:s=>true},
+  {id:"ordinary",name:"你在这里留下了自己的位置",desc:"你的选择没有形成特别鲜明的单一路线。你帮助过人，也优先照顾过自己；尝试过新事，也有几次决定先休息。开放日结束后，没有一个奖项能完整概括你，但大家已经会自然地给你留位置、问你明天还来不来。",priority:0,test:s=>true},
+  {id:"shared_class",name:"你总在确认有没有人被落下",desc:"当材料、机会或注意力不够分时，你多次选择重新分配，而不是默认让某个人退出。结果未必最漂亮，过程也更麻烦，但开放日结束后，每个人都能指出一处自己真正参与过的地方。这个结局来自你连续做出的包容选择。",priority:0,test:s=>s.flags.includes("everyone_badge")&&s.flags.includes("free_photo")&&s.flags.includes("rest_corner")},
+  {id:"true_story",name:"你把答应过的事走到了最后",desc:"你曾有机会缩短、替换或放弃那个最初答应大家的结尾，但你选择继续调整，并承担额外的精力成本。最终成果并不完美，其中仍有迟到和失误，可它确实完成了。这个结局评价的是你对自己承诺的坚持。",priority:0,test:s=>s.flags.includes("true_finale")&&s.flags.includes("final_witness")},
+  {id:"class_archive",name:"你把散落的回忆连成了故事",desc:"你多次选择保留旧纸条、失败品和看似无用的线索，并主动寻找它们之间的联系。开放日里，参观的人未必看懂全部细节，但同学们知道那些故事为什么重要。这个结局来自你对共同记忆的整理，而不是某个角色的个人支线。",priority:0,test:s=>s.flags.includes("class_game")&&s.flags.includes("secret_lore")&&s.flags.includes("failure_clues")},
+  {id:"trust_rebuilt",name:"你没有用“算了”盖住问题",desc:"面对隐瞒、失约和受伤的感受时，你选择让事情被说清楚，也接受坦白以后关系不会立刻恢复。你没有制造一个完美和解，却让之后的相处不再建立在假装没发生过之上。",priority:0,test:s=>s.flags.includes("repaired_trust")&&s.flags.includes("honest_circle")},
+  {id:"quiet_place",name:"你允许别人按自己的速度参加",desc:"你没有要求每个人都必须热闹、勇敢或立刻回答。你多次为不想露脸、暂时疲惫或需要独处的人保留选择。开放日结束后，那些安静的空间和不完整的合照，成为你这一局最清楚的痕迹。",priority:0,test:s=>s.flags.includes("quiet_respected")&&s.flags.includes("rest_corner")&&s.flags.includes("respected_blank")},
+  {id:"storm_team",name:"你让大家一起承担了混乱",desc:"意外发生时，你没有寻找一个人来负责全部，也没有把风险推给最可靠的人。你选择分工、备用方案和共同承担损失。最后仍有东西没能保住，但没人需要独自背负失败。",priority:0,test:s=>s.flags.includes("storm_leader")&&s.flags.includes("plan_b_saved")&&(s.flags.includes("safe_shift")||s.flags.includes("no_martyr"))},
+  {id:"many_seasons",name:"你学会了不把每次经历当成同一条路",desc:"经历多个学期后，你面对似曾相识的场景时，没有机械重复以前的答案。你愿意承认记忆可能混在一起，也重新观察眼前的人和变化。这个结局来自多周目中的不同选择，而不是单纯完成足够次数。",priority:0,test:(s,m)=>m.runs>=4&&s.flags.includes("memory_page_rebuilt")&&s.flags.includes("remembered_dream")},
+  {id:"keeper_between",name:"你没有把别人的回忆据为己有",desc:"当不属于这一学期的东西出现在你面前时，你选择寻找原来的归属，而不是把它当成自己的收藏。你没有因此得到更耀眼的奖励，却学会了有些故事可以被认真保管，却不必由自己拥有。",priority:0,test:(s,m)=>m.runs>=3&&s.flags.includes("meta_badge_returned")}
 ];
 
 GAME_DATA.awards = [
@@ -376,7 +378,7 @@ GAME_DATA.awards = [
   {id:"full_story",name:"把灯灯全部点亮奖",desc:"见证活动从第一张草图到最后一盏灯。",test:s=>s.flags.includes("true_finale")&&s.flags.includes("final_witness")},
   {id:"truth",name:"迟到的坦白奖",desc:"保护一个人，也没有让另一个人永远被蒙在鼓里。",test:s=>s.flags.includes("repaired_trust")},
   {id:"archivist",name:"班级考古学家",desc:"让旧物不只是旧物，而成为这一届的新故事。",test:s=>s.flags.includes("class_game")||s.flags.includes("old_notes")},
-  {id:"no_one_out",name:"一个也不能少",desc:"在资源不足时仍设法让每个人都得到一份。",test:s=>s.flags.includes("everyone_badge")},
+  {id:"no_one_out",name:"一个也不能少",desc:"在材料不够时仍设法让每个人都得到一份。",test:s=>s.flags.includes("everyone_badge")},
   {id:"failure",name:"小失败也珍贵奖",desc:"认真保存那些没有成功、却并非没有价值的尝试。",test:s=>s.flags.includes("failure_museum")},
   {id:"quiet",name:"安静一下也没关系奖",desc:"知道有时最好的关心，是允许别人暂时不回答。",test:s=>s.flags.includes("quiet_respected")&&s.flags.includes("respected_blank")},
   {id:"bird",name:"窗台小观察家",desc:"在好奇之前先学会不打扰。",test:s=>s.flags.includes("bird_rescue")},
@@ -520,7 +522,7 @@ GAME_DATA.followups.push(
     id:"garden_return", day:[15,17], requireFlag:"plant_log", title:"神秘小芽终于开花了", characters:["huahua","niko","xizhou"],
     text:"观察牌写满以后，小花盆终于开出一朵很小的黄色花。妮蔻翻遍记录想确认名字，花花只顾着看它，西洲说：『先拍下来，等会儿又不认识了。』",
     choices:[
-      {text:"把每天的记录整理成一本成长册",effects:{stats:{order:1,creativity:1},bonds:{huahua:2,niko:2}},result:"从第一片叶子到第一朵花，每一天都被留下。西洲提供了一本明显很贵、却被他说成“家里多的”小相册。"},
+      {text:"把每天的记录整理成一本成长册",effects:{stats:{order:1,creativity:1},bonds:{huahua:2,niko:2}},result:"从第一片叶子到第一朵花，每一天都被留下。西洲带来一本很好看的空白小册子，嘴上只说放着也是放着。"},
       {text:"先不查名字，给它起一个班级昵称",effects:{stats:{kindness:1,creativity:1},bonds:{niko:2,xizhou:1}},result:"大家叫它“小黄点”。后来查到正式名字后，也没有人愿意改口。"}
     ]
   },
@@ -545,22 +547,6 @@ GAME_DATA.dailyActions = [
   { id:"rest", title:"什么都不安排，好好休息", desc:"会错过今天的一次主动成长，但恢复大量精力。", energy:3, stats:{}, bonds:["qaq","xizhou"] }
 ];
 
-// 结局文案扩写。每个结局都说明这学期发生了什么，而非只给一句抽象评价。
-const endingText = {
-  heart:"开放日结束后，大家没有立刻去拆装饰。泡芙先来问你那张纸条要不要收进回忆册，蘑托车随后抱着坏掉的赛道来找你，连平时不爱说话的人也愿意在你旁边坐一会儿。你并没有替所有人解决问题，却让他们相信，难过、害怕和不满意都可以被说出来。离园前，老师发现你的抽屉里多了好几张没有署名的小纸条。它们写着不同的事情，最后却都用了同一句话：『我觉得你会认真看。』",
-  architect:"开放日前一天，教室依然乱得像被风吹过。到了第二天早上，每一盒彩笔、每一张提示卡和每一个需要帮忙的人，却都找到了自己的位置。大家并不总喜欢你的安排，也有人抱怨你太认真，但当灯突然不亮、鞋子突然找不到时，他们最先看的还是你留下的顺序表。活动结束后，西洲把那张已经被涂改得看不清的表折好，说它很丑，却比漂亮海报有用得多。",
-  spark:"最初的计划里没有皱纸赛道、沉默纸偶，也没有会长脚的宝藏。它们都来自失误、争吵或某个临时冒出的怪主意。你没有让所有作品变得完美，反而让很多失败获得了第二种样子。开放日结束后，大家争着把半成品带回家，因为谁也说不准，下次它会不会又变成新的东西。老师在回忆册上写：『这个学期最难预测，也最舍不得结束。』",
-  first_step:"你有几次冲得太快，也有几次因为先开口而把事情弄得更麻烦。但在所有人都站着不动的时候，总有人需要先说一句“我来试试”。慢慢地，点点会在尝试前回头确认别人有没有跟上，蘑托车也学会输掉一次后不马上离开。开放日那天，你没有站在最显眼的位置，却到处都留下了第一个脚印。",
-  shared_class:"这次开放日并不整齐：徽章大小不一样，合照里有人只露出手，休息角甚至没有任何玩法。可到了离园时间，没有谁觉得自己只是来帮忙的人，也没有谁因为做不到某件事就被留在外面。老师问大家最喜欢哪个区域，答案乱成一片。你忽然明白，这个结局并不是大家喜欢同一件事，而是每个人都在里面找到了属于自己的那一点。",
-  true_story:"为了保留最后那段灯光，你们试了很多次，也真的有人累得发脾气。中途你甚至怀疑，坚持是不是只会让大家更辛苦。开放日最后一轮，纸灯终于按顺序亮起，却没有想象中那么完美，其中一盏慢了半拍。全班先是安静，随后一起笑了。你走完整条路线后才发现，真正值得留下的不是那几秒灯光，而是每次失败后仍然有人愿意再试一次。",
-  class_archive:"旧纸条、缺了一半说明书的游戏、泡皱的赛道和没人想要的失败品，被你们连成了只有这一届看得懂的故事。参观者经常一头雾水，班里的小朋友却会在某个细节前忽然笑起来。学期结束时，你们把线索装进一个盒子，没有把答案全部写下。也许下一届会误解，也许会重新改写——就像你们曾经做过的那样。",
-  trust_rebuilt:"这不是一个大家立刻和好的结局。花花仍记得自己被瞒着时的感觉，欢佬补完记录后也没有马上得到所有人的原谅。可你们不再用“算了”把事情盖住。开放日结束后，泡芙主动把弄脏背景板的经过写进了回忆册，旁边留下了一块空白，让花花决定要不要补充。第二天，那块空白里多了一片蓝色的海。",
-  quiet_place:"你没有让每个人都变得更勇敢、更热闹。有人在合照时仍然不想露脸，有人午饭时还是喜欢独自坐着，也有人在活动最热闹时躲进休息角。过去大家总以为参加就必须表现得开心，这次却有人可以安静地待着，等自己愿意再回来。开放日结束后，最先被要求保留下来的，正是那块什么都不用做的角落。",
-  storm_team:"暴雨来时，没有人像故事里的英雄一样独自救下全部东西。有人只搬动了两张椅子，有人找来毛巾，有人因为害怕一直站在门口。你们也丢掉了一些来不及抢救的作品。可雨停以后，没有谁把损失怪在某个人身上。开放日当天，墙上留着一块没有补好的水迹，旁边贴着一张小卡片：『这里是大家一起没能救下来的地方。』",
-  friendship:"班级里的很多大事以后可能会记不清，但你和一个人的细节会留下来：一起坐过的窗边、分享过的一口点心、某次没有说完的话。开放日结束后，其他人忙着收拾，你们却因为一个很小的东西又聊了很久。这个学期没有让你认识所有人，却让你知道，关系不需要很多才算完整。",
-  ordinary:"你没有拿到一个特别容易概括的故事。你做过好事，也逃开过麻烦；和一些人变熟，也错过了另一些人的心情。开放日结束后，教室恢复成普通的样子，你甚至一时想不起自己究竟改变了什么。直到离园时，有人自然地把你的水杯也一起拿来，有人问你明天还玩不玩。原来所谓留下位置，并不一定会被郑重宣布。"
-};
-GAME_DATA.endings.forEach(e=>{ if(endingText[e.id]) e.desc=endingText[e.id]; });
 
 // 奖章用于记录最有代表性的行为。结算时最多展示两枚。
 GAME_DATA.awards.forEach((a,i)=>a.priority = 100-i);
@@ -581,10 +567,6 @@ GAME_DATA.events.push(
   ]}
 );
 
-GAME_DATA.endings.unshift(
-  {id:"many_seasons",name:"你记得不止一个学期",desc:"开放日结束后，你没有立刻合上回忆册。那些本不该同时存在的画面——不同版本的名字墙、曾经送出去又重新出现的徽章、某一页空白——在脑中短暂重叠。你无法证明自己真的经历过许多个向日葵中班，但你知道每一次选择都留下了痕迹。最后，你把这一学期的新回忆放回架子，没有试图找出唯一正确的版本。因为真正特别的不是记住全部，而是一次次回来时，你仍愿意认真对待眼前的人。",priority:100,test:(s,m)=>m.runs>=4&&s.flags.includes("memory_page_rebuilt")},
-  {id:"keeper_between",name:"不属于你的回忆，也被你好好放回去了",desc:"那枚来自别的学期的旧徽章最终消失了，你没有得到任何证明，也没有因此解锁一件耀眼的收藏。可在学期最后一天，秘密信箱里出现了一朵折得很小的纸向日葵。没有署名，也没有解释。你把它留在原处。也许多周目真正改变的不是你知道得更多，而是你开始明白，并非每段故事都需要由自己拥有。",priority:98,test:(s,m)=>m.runs>=3&&s.flags.includes("meta_badge_returned")}
-);
 
 // 幼儿园尺度的复杂情绪事件：不保证每次选择都得到圆满结果。
 GAME_DATA.events.push(
@@ -603,10 +585,10 @@ GAME_DATA.events.push(
     {text:"承认小团体可以存在，但不能拿来嘲笑别人",effects:{stats:{courage:1,kindness:1},bonds:{diandian:1,latiao:1,qaq:1}},flags:["allowed_small_group"],result:"辣条还是不高兴，却没有再要求加入。下午她也约了别人玩自己的游戏。大家没有完全和好，但开始承认朋友不必永远一起行动。"},
     {text:"另外陪辣条玩，不再谈那场秘密游戏",effects:{stats:{kindness:2},bonds:{latiao:3,diandian:-1}},result:"辣条很快笑了起来，点点却觉得你在用另一场游戏惩罚她。第二天，两边都没有主动提起这件事。"}
   ]},
-  {id:"promise_forgotten",day:[14,17],title:"答应过的事情被忘记了",characters:["momo","huan","xizhou"],text:"欢佬答应替馍馍带一张重要的食物说明卡，却忘得一干二净。馍馍说没关系，转身后却偷偷哭了。西洲评价：『说没关系的人，通常就是最有关系。』",choices:[
-    {text:"让欢佬立刻想办法补救",effects:{stats:{order:2},energy:-1,bonds:{momo:2,huan:1}},flags:["promise_repaired"],result:"说明卡最后补出来了，却比原计划粗糙。馍馍接受了道歉，但没有说“完全没关系”。"},
+  {id:"promise_forgotten",day:[14,17],title:"答应过的事情被忘记了",characters:["momo","huan","xizhou"],text:"欢佬答应替馍馍带一张开放日摊位的小招牌，却忘得一干二净。馍馍说没关系，转身后却偷偷哭了。西洲评价：『说没关系的人，通常就是最有关系。』",choices:[
+    {text:"让欢佬立刻想办法补救",effects:{stats:{order:2},energy:-1,bonds:{momo:2,huan:1}},flags:["promise_repaired"],result:"小招牌最后补出来了，却比原计划粗糙。馍馍接受了道歉，但没有说“完全没关系”。"},
     {text:"陪馍馍承认自己真的很失望",effects:{stats:{kindness:2},bonds:{momo:3,huan:-1}},flags:["disappointment_spoken"],result:"馍馍第一次没有急着照顾别人的心情。欢佬听见后沉默很久，直到放学也没想出合适的玩笑。"},
-    {text:"替欢佬完成，不让事情继续变大",effects:{stats:{order:1,kindness:1},energy:-2,bonds:{momo:1,huan:2,xizhou:-1}},flags:["covered_promise"],result:"开放日没有受影响，欢佬也很感谢你。西洲却说，你解决了卡片，没有解决“答应的人不用负责”这件事。"}
+    {text:"替欢佬完成，不让事情继续变大",effects:{stats:{order:1,kindness:1},energy:-2,bonds:{momo:1,huan:2,xizhou:-1}},flags:["covered_promise"],result:"摊位没有少东西，欢佬也很感谢你。西洲却说，你解决了卡片，没有解决“答应的人不用负责”这件事。"}
   ]}
 );
 
@@ -616,15 +598,15 @@ const V6_CHARACTER_UPDATES = {
   qaq:{trait:"平时神秘安静，只有遇到喜欢的高难度游戏才明显活跃；不主动邀人，但很乐意讲玩法、看别人玩。",likes:"高难度游戏、固定游戏搭子、安静旁观"},
   diandian:{trait:"外向而有分寸，想问就问、需要帮助就开口；擅长生活小事和照顾花草，可惜几乎没有中奖运。",likes:"直接提问、花草、解决小麻烦"},
   moto:{trait:"大家口中的猫头或狗头车；爱做无害又可爱的恶作剧，也会学着投喂大家。",likes:"抓宠物游戏、饮料、可爱的捣乱"},
-  huahua:{trait:"看起来淡淡的，常被补习班占走时间；会默默补位，不抛下掉队的伙伴，而且中奖和抢限量都很强。",likes:"莲花玩具、投喂、陪伙伴慢慢来"},
+  huahua:{trait:"看起来淡淡的，放学后常有家长安排的兴趣班；会默默补位，不抛下掉队的伙伴，而且抽签运气很好，抢游戏里最后一个位置也很快。",likes:"莲花玩具、投喂、陪伙伴慢慢来"},
   momo:{trait:"聪明、大大咧咧、想到什么说什么；什么游戏都玩，开心就够了，并相信自己总有一天会养到猫。",likes:"真正的小猫、轻松话题、好玩的游戏"},
-  niko:{trait:"向日葵中班元老之一；稳重，认真时游戏很强，严肃讨论结束后也能立刻继续一起闹。",likes:"策略讨论、接梗、把事情讲清楚"},
-  taoba:{trait:"耐心到令人惊讶，擅长解释复杂规则和在缺资源时想现实办法；会量力而行地帮助亲近的人。",likes:"复杂规则、实践、饮料"},
+  niko:{trait:"向日葵中班元老之一；稳重，认真时游戏很强，严肃讨论结束后也能立刻继续一起闹。",likes:"认真讨论规则、接梗、把事情讲清楚"},
+  taoba:{trait:"耐心到令人惊讶，擅长解释复杂规则和在缺少材料时想替代办法；会量力而行地帮助亲近的人。",likes:"复杂规则、实践、饮料"},
   puff:{trait:"好奇、爱想办法、喜欢鬼故事；问题严重到一定程度才会指出，自以为委婉，其实仍然很直接。",likes:"鬼故事、新玩法、熟悉的音乐"},
-  huan:{trait:"曾经转学离开又回来；兴趣来得快也去得快，但最近真的在认真练琴。",likes:"新鲜兴趣、练琴、被开玩笑会种地"},
-  xizhou:{trait:"最近因为到处看演出而极少出现；社牛、眼力好、爱憎分明，大家会期待他替所有人说出难开口的话。",likes:"演出、美食、抽奖、直指问题"},
+  huan:{trait:"曾经转学离开又回来；兴趣来得快也去得快，但最近真的在认真练琴。",likes:"新鲜兴趣、练琴、突然投入的新玩法"},
+  xizhou:{trait:"最近常跟家长去看儿童舞台表演，因此很少来园；社牛、眼力好、爱憎分明，大家会期待他替所有人说出难开口的话。",likes:"舞台故事、好吃的点心、贴纸抽签、直指问题"},
   latiao:{trait:"非常忙，常常不能到场；擅长甜点，被冒犯时会直接说，也愿意分享自己的倒霉事。",likes:"甜点、坦率、有人认真听"},
-  cutie:{trait:"出现不多，也没有固定亲密小圈；实力很强却不炫耀，更愿意聊收藏、营养饭和偶尔奇怪的梦。",likes:"卡通收藏、均衡便当、照顾留下的植物"}
+  cutie:{trait:"出现不多，也没有固定亲密小圈；实力很强却不炫耀，更愿意聊收藏、自己搭配的彩色午餐和偶尔冒出的奇怪想象。",likes:"卡通收藏、彩色午餐、照顾留下的植物"}
 };
 GAME_DATA.characters.forEach(c=>Object.assign(c,V6_CHARACTER_UPDATES[c.id]||{}));
 
@@ -637,10 +619,10 @@ GAME_DATA.followups = GAME_DATA.followups.filter(e=>!V6_REMOVE_FOLLOWUPS.has(e.i
 GAME_DATA.events.push(
   {
     id:"v6_game_group_new",day:[2,6],title:"今天试哪个新游戏",characters:["qaq","momo","niko","huahua"],
-    text:"QAQ丨带来一个规则很多的新游戏。馍馍已经说“先开一局再说”，妮蔻要求先把最容易弄错的地方讲清楚。花花今天补习结束得晚，大家还在犹豫要不要先开始。",
+    text:"QAQ丨带来一个规则很多的新游戏。馍馍已经说“先开一局再说”，妮蔻要求先把最容易弄错的地方讲清楚。花花今天的课外兴趣班结束得晚，大家还在犹豫要不要先开始。",
     choices:[
       {text:"等花花来齐以后再开第一局",effects:{stats:{kindness:2},bonds:{qaq:2,huahua:3,momo:1,niko:1}},flags:["game_group_waited"],result:"馍馍先去玩了别的。花花赶来后，QAQ丨从头重新讲了一遍规则，没有人催她。"},
-      {text:"先开教学局，给花花留一张规则卡",effects:{stats:{order:1,creativity:1},bonds:{qaq:2,niko:2,huahua:1}},flags:["game_rule_card"],result:"妮蔻把容易误解的地方写得很清楚。花花来晚了，但只看一遍就跟上了。"},
+      {text:"先玩一轮练习局，给花花留一张图画规则卡",effects:{stats:{order:1,creativity:1},bonds:{qaq:2,niko:2,huahua:1}},flags:["game_rule_card"],result:"妮蔻把容易误解的地方写得很清楚。花花来晚了，但只看一遍就跟上了。"},
       {text:"让馍馍直接带大家边玩边学",effects:{stats:{courage:1},bonds:{momo:3,qaq:1}},result:"第一局乱成一团，却很好笑。QAQ丨在旁边认真看完，第二局才开始纠正所有人的玩法。"}
     ]
   },
@@ -662,37 +644,37 @@ GAME_DATA.events.push(
   },
   {
     id:"v6_lottery",day:[3,11],title:"这次谁来抽",characters:["diandian","huahua","xizhou"],
-    text:"西洲难得回来，带来几张小奖券。大家都知道点点几乎抽不中，花花却常常一伸手就抽到最好的一张。",
+    text:"西洲难得回来，带来一个装着贴纸奖品的小抽签盒。大家都知道点点几乎抽不中，花花却常常一伸手就抽到最好的一张。",
     choices:[
       {text:"让点点先抽一次",effects:{stats:{courage:1},bonds:{diandian:3,xizhou:1}},flags:["diandian_lost_again"],result:"点点果然抽到“谢谢参与”，自己先笑了。西洲马上又加了一轮，说这次不算。"},
       {text:"请花花帮别人代抽",effects:{stats:{kindness:1},bonds:{huahua:3,xizhou:2}},flags:["huahua_lucky"],result:"花花替别人抽到了一等奖，自己却只拿了最普通的一张贴纸。"},
-      {text:"让西洲把奖品改成人人都有",effects:{stats:{order:1,kindness:1},bonds:{xizhou:2}},result:"西洲说那就不叫抽奖了，但最后还是把每个人的奖品都补齐了。"}
+      {text:"建议另外准备一张人人都有的小贴纸",effects:{stats:{order:1,kindness:1},bonds:{xizhou:2}},result:"西洲说抽签本来就不该人人一样，但还是给没抽中的人准备了小星星贴纸。"}
     ]
   },
   {
     id:"v6_drink_group",day:[3,12],title:"今天喝什么",characters:["moto","taoba","momo"],
-    text:"蘑托车、桃爸和馍馍又开始讨论今天喝什么。蘑托车想试新品，桃爸认真比较配料，馍馍已经说“都行，快点决定”。",
+    text:"点心时间有三种饮料：草莓牛奶、橙汁和酸奶饮料。蘑托车想试最少见的，桃爸认真看每种口味，馍馍已经说“都行，快点决定”。",
     choices:[
       {text:"听桃爸分析完再选",effects:{stats:{order:1},bonds:{taoba:3,moto:1,momo:1}},result:"桃爸分析得太完整，最后三个人分别选了三种不同的。"},
-      {text:"跟蘑托车一起选最奇怪的新品",effects:{stats:{courage:1},bonds:{moto:3,momo:1}},result:"味道没有想象中奇怪，蘑托车宣布下次还要点更夸张的。"},
+      {text:"跟蘑托车一起选最奇怪的新品",effects:{stats:{courage:1},bonds:{moto:3,momo:1}},result:"味道没有想象中奇怪，蘑托车宣布下次还要选颜色更特别的。"},
       {text:"让馍馍直接拍板",effects:{stats:{kindness:1},bonds:{momo:3,taoba:1}},result:"馍馍选了最稳妥的一种，三个人边喝边继续讨论下次。"}
     ]
   },
   {
-    id:"v6_latiao_delivery",day:[5,13],title:"辣条今天还是没来",characters:["latiao","huahua","cutie"],
-    text:"辣条又因为忙没能来，但花花带来了一盒她提前做好的小点心。盒盖上写着：‘别问为什么少了两个，我试味道。’",
+    id:"v6_latiao_bakery",day:[5,13],title:"纸黏土点心铺",characters:["latiao","huahua","cutie"],
+    text:"教室开了一间纸黏土点心铺。辣条捏出来的奶油卷最像真的，但有人把她做的圆饼说成了‘一团白泥’。辣条马上说：‘你可以不喜欢，可别故意说得难听。’",
     choices:[
-      {text:"先给花花留一份",effects:{stats:{kindness:2},bonds:{huahua:3,latiao:2}},flags:["saved_for_huahua"],result:"花花说自己已经吃过试做品了，还是把那一份收好，准备下次见到辣条时一起吃。"},
-      {text:"给辣条写一张大家都吃到了的回信",effects:{stats:{kindness:1,creativity:1},bonds:{latiao:3,huahua:1}},flags:["latiao_reply"],result:"第二天辣条回了一句：‘知道了。下次别让花花一路拎着，挺重的。’"},
-      {text:"问小可爱要不要一起试吃",effects:{stats:{kindness:1},bonds:{cutie:2,latiao:1}},result:"小可爱认真评价了甜度，然后平静地说昨晚又梦见辣条来她家蹭饭。"}
+      {text:"支持辣条把不舒服说清楚",effects:{stats:{courage:2},bonds:{latiao:3,huahua:1}},flags:["latiao_boundary"],result:"对方重新说了一遍：他只是看不出那是什么。辣条告诉他自己原本想做什么，又当场重新捏了一个更清楚的。"},
+      {text:"请辣条教大家捏最简单的小点心",effects:{stats:{creativity:2},bonds:{latiao:3,cutie:1}},flags:["latiao_baking_skill"],result:"辣条把步骤讲得很短，手却做得很快。小可爱在旁边认真给每种颜色排了顺序。"},
+      {text:"和花花一起把失败品也摆进柜台",effects:{stats:{kindness:1,creativity:1},bonds:{huahua:2,latiao:2}},result:"歪掉的饼干和塌下去的蛋糕反而最受欢迎。辣条说它们不好看，但没说要拿走。"}
     ]
   },
   {
-    id:"v6_cutie_dream",day:[6,14],title:"小可爱的奇怪梦",characters:["cutie","latiao"],
-    text:"小可爱忽然说：‘奇怪。我也没见过辣条。刚才好像梦到辣条住我隔壁，还来我家蹭饭了。’她的语气平静得像在说午饭菜单。",
+    id:"v6_cutie_imagination",day:[6,14],title:"摆件们的座位表",characters:["cutie","puff"],
+    text:"小可爱带来几张自己喜欢的卡通角色卡片。她排了很久，忽然认真地问：‘如果它们晚上在柜子里开会，最爱讲话的应该坐中间，还是坐最远？’",
     choices:[
-      {text:"认真问梦里辣条吃了什么",effects:{stats:{creativity:2},bonds:{cutie:3,latiao:1}},flags:["asked_dream_menu"],result:"小可爱想了很久，说梦里的辣条把她营养搭配好的饭全吃完了，还嫌汤太淡。"},
-      {text:"把这个梦画成四格故事",effects:{stats:{creativity:2},bonds:{cutie:2,puff:1}},flags:["dream_comic"],result:"泡芙看完以后说一点也不恐怖，但很像真的会发生。"}
+      {text:"认真帮她安排一张座位表",effects:{stats:{creativity:2,order:1},bonds:{cutie:3}},flags:["toy_seating_chart"],result:"你们按性格把卡片排成一圈。小可爱看了一会儿，说这样晚上大概不会吵起来。"},
+      {text:"请泡芙给这场夜间聚会编一个神秘故事",effects:{stats:{creativity:2},bonds:{cutie:2,puff:2}},flags:["toy_night_story"],result:"泡芙讲了一个有点阴森的开头，小可爱却只关心故事里的摆件有没有按她排好的位置坐。"}
     ]
   },
   {
@@ -713,16 +695,16 @@ GAME_DATA.events.push(
   },
   {
     id:"v6_xizhou_return",day:[7,16],title:"西洲偶尔回来一次",characters:["xizhou","puff","diandian"],
-    text:"西洲很久没出现，今天一进教室就开始讲最近看过的演出和吃过的东西。泡芙只要点点头，他也能自己把故事讲得热闹。",
+    text:"西洲很久没来园，今天一进教室就开始讲最近跟家长看过的儿童舞台剧和吃到的小点心。泡芙只要点点头，他也能自己把故事讲得很热闹。",
     choices:[
       {text:"问他最好吃的是哪一样",effects:{stats:{kindness:1},bonds:{xizhou:3,puff:1}},flags:["xizhou_food_story"],result:"西洲认真夸了一家真的很好吃的点心，又顺便把另外两家批评得很具体。"},
-      {text:"请他讲最近最好看的演出",effects:{stats:{creativity:1},bonds:{xizhou:3,puff:2}},flags:["same_music"],result:"泡芙发现自己也喜欢其中一位歌手。西洲说她品味终于进步了。"},
-      {text:"问他下次什么时候再来",effects:{stats:{kindness:1},bonds:{xizhou:2,diandian:1}},result:"西洲说不知道，行程很多。但他说下次回来还会带抽奖。"}
+      {text:"请他讲最近最好看的舞台故事",effects:{stats:{creativity:1},bonds:{xizhou:3,puff:2}},flags:["same_music"],result:"泡芙发现自己也喜欢那部舞台剧里的音乐角色。西洲说她总算听懂什么叫好听了。"},
+      {text:"问他下次什么时候再来",effects:{stats:{kindness:1},bonds:{xizhou:2,diandian:1}},result:"西洲说不知道，最近还有几次要跟家长外出。但他说下次回来还会带新的贴纸抽签盒。"}
     ]
   },
   {
     id:"v6_xizhou_speaks",day:[9,17],title:"终于有人把话说出来",characters:["xizhou","puff","latiao"],
-    text:"大家都对一个总抢别人东西、还装作没事的外班小朋友有意见，却只在私下说。西洲听完，当面指出了对方到底哪里让人讨厌。",
+    text:"自由活动时，有个小朋友总把公共积木先抱到自己身边，别人想拿时还装作没听见。大家都不太高兴，却没人愿意开口。西洲看了一会儿，直接说清楚大家介意的是什么。",
     choices:[
       {text:"支持西洲把具体问题说清楚",effects:{stats:{courage:2,order:1},bonds:{xizhou:3,latiao:2}},flags:["xizhou_spoke"],result:"没有人觉得他把事情搞大，反而都松了一口气。对方第一次知道大家真正介意的是什么。"},
       {text:"由泡芙再补充一句比较委婉的话",effects:{stats:{courage:1,kindness:1},bonds:{puff:3,xizhou:1}},flags:["puff_not_so_gentle"],result:"泡芙认真铺垫了很久，最后说出来的话仍然很直接。西洲听完说：‘你这也没委婉到哪去。’"}
@@ -754,9 +736,9 @@ GAME_DATA.events.push(
   },
   {
     id:"v6_cute_collection",day:[8,16],title:"小可爱愿意展示的东西",characters:["cutie","huahua"],
-    text:"有人夸小可爱很会做事，她只说还好。可一提到她喜欢的卡通角色，她马上拿出一排摆件照片，开始认真介绍每一个。",
+    text:"有人夸小可爱很会做事，她只说还好。可一提到她喜欢的卡通角色，她马上拿出自己带来的收藏小册子，开始认真介绍每一个。",
     choices:[
-      {text:"请她选一个最喜欢的讲故事",effects:{stats:{kindness:1,creativity:1},bonds:{cutie:3}},flags:["collection_story"],result:"她最后说了很久，远比介绍自己会做什么时详细。"},
+      {text:"请她选一个最喜欢的收藏讲故事",effects:{stats:{kindness:1,creativity:1},bonds:{cutie:3}},flags:["collection_story"],result:"她最后说了很久，远比介绍自己会做什么时详细。"},
       {text:"和花花一起做一个展示角",effects:{stats:{creativity:2},bonds:{cutie:2,huahua:2}},flags:["collection_corner"],result:"花花没有抢着设计，只帮她把每个摆件都放到最合适的位置。"}
     ]
   }
@@ -764,16 +746,11 @@ GAME_DATA.events.push(
 
 GAME_DATA.followups.push(
   {id:"v6_plant_leaf",day:[9,16],title:"植物长出一片新叶",characters:["cutie","diandian"],requireFlag:"plant_kept",text:"窗边的植物长出一片很嫩的新叶。小可爱看了很久，只说：‘它还记得怎么长。’",choices:[{text:"把新叶日期记下来",effects:{stats:{order:1,kindness:1},bonds:{cutie:3}},flags:["plant_leaf"],result:"记录表上多了一行日期。小可爱没有提那位已经转学的朋友。"}]},
-  {id:"v6_plant_bloom",day:[12,17],title:"这一次终于开花了",characters:["cutie","all"],requireMeta:{runs:3},requireMetaEvents:["v6_plant_first","v6_plant_leaf"],text:"很多学期以后，那盆植物第一次开花。小可爱把花盆搬到窗边最亮的位置，大家轮流来看。",choices:[{text:"只拍植物，不要求小可爱讲过去",effects:{stats:{kindness:2},bonds:{cutie:4}},flags:["plant_bloomed"],result:"照片里没有那位离开的同学，但所有人都知道这朵花为什么被照顾了这么久。"}]},
+  {id:"v6_plant_bloom",day:[12,17],title:"这一次终于开花了",characters:["cutie","all"],requireMeta:{runs:3},requireMetaEvents:["v6_plant_first","v6_plant_leaf"],text:"很多学期以后，那盆植物第一次开花。小可爱把花盆搬到窗边最亮的位置，大家轮流来看。",choices:[{text:"只拍植物，不要求小可爱讲过去",effects:{stats:{kindness:2},bonds:{cutie:4}},flags:["plant_bloomed"],result:"花朵旁边没有那位离开的同学，但所有人都知道这朵花为什么被照顾了这么久。"}]},
   {id:"v6_piano_second",day:[10,17],title:"欢佬没有换掉这个兴趣",characters:["huan","momo"],requireMeta:{runs:2},requireMetaEvents:["v6_huan_piano"],text:"下一次再见到欢佬时，他还在练琴。大家本来以为这也会像以前那些兴趣一样很快过去。",choices:[{text:"请他弹完再去玩",effects:{stats:{kindness:1,creativity:1},bonds:{huan:4,momo:1}},flags:["piano_continues"],result:"馍馍坐不住，先跑去玩了。等欢佬弹完，她又第一个回来听。"}]},
   {id:"v6_game_memory",day:[8,17],title:"这个规则以前是不是讲过",characters:["qaq","niko","momo"],requireMeta:{runs:2},requireMetaEvents:["v6_game_group_new"],text:"QAQ丨讲到一半忽然停下来，说这个规则好像以前已经讲过。妮蔻也觉得熟悉，馍馍却说反正再玩一次就知道了。",choices:[{text:"不追究，直接再开一局",effects:{stats:{creativity:1},bonds:{qaq:3,niko:2,momo:2}},flags:["game_dejavu"],result:"这一局和记忆里不太一样，但大家都觉得自己已经知道下一步会发生什么。"}]},
-  {id:"v6_xizhou_again",day:[10,17],title:"西洲又很久没来",characters:["xizhou","puff"],requireMeta:{runs:2},requireMetaEvents:["v6_xizhou_return"],text:"西洲又消失了很久。泡芙听见大家说起他，只说等他回来，教室一定又会一下子变热闹。",choices:[{text:"给他留一张抽奖券",effects:{stats:{kindness:1},bonds:{xizhou:3,puff:2}},flags:["xizhou_ticket"],result:"西洲下次回来时先嫌你们多此一举，然后把奖券又放进了新的抽奖盒。"}]}
+  {id:"v6_xizhou_again",day:[10,17],title:"西洲又很久没来",characters:["xizhou","puff"],requireMeta:{runs:2},requireMetaEvents:["v6_xizhou_return"],text:"西洲又消失了很久。泡芙听见大家说起他，只说等他回来，教室一定又会一下子变热闹。",choices:[{text:"给他留一张下次抽贴纸用的小卡片",effects:{stats:{kindness:1},bonds:{xizhou:3,puff:2}},flags:["xizhou_ticket"],result:"西洲下次回来时先嫌你们多此一举，然后把小卡片又放进了新的贴纸抽签盒。"}]}
 );
 
-GAME_DATA.endings.push(
-  {id:"plant_keepsake",name:"窗边一直有人记得",priority:96,test:(s,m)=>s.flags.includes("plant_bloomed"),desc:"开放日结束后，那盆植物仍留在窗边。你没有见过种下它的人，却见证了它被照顾、长叶、开花。小可爱从不把这件事说得很重，但每一次浇水都让过去继续留在今天。"},
-  {id:"same_table_game",name:"这一局先不结束",priority:91,test:(s,m)=>s.flags.includes("game_dejavu")&&s.flags.includes("game_group_waited"),desc:"很多游戏玩过以后都会收起来，可你们总能找到下一款。有人晚到，有人只看，有人边玩边学。真正被留下来的不是某一局胜负，而是那张总有人愿意重新坐回来的桌子。"},
-  {id:"piano_stays",name:"这次真的坚持下来了",priority:90,test:(s,m)=>s.flags.includes("piano_continues"),desc:"欢佬以前迷上过很多东西，也放下过很多东西。这次不同。练琴没有占满他的全部生活，却稳稳留在其中。大家不再问他什么时候会换兴趣，只会在他练完以后给他留一个位置。"}
-);
 
 // V6.0 每局最多保留两枚代表奖章，旧图鉴继续兼容。
