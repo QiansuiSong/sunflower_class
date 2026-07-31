@@ -609,3 +609,171 @@ GAME_DATA.events.push(
     {text:"替欢佬完成，不让事情继续变大",effects:{stats:{order:1,kindness:1},energy:-2,bonds:{momo:1,huan:2,xizhou:-1}},flags:["covered_promise"],result:"开放日没有受影响，欢佬也很感谢你。西洲却说，你解决了卡片，没有解决“答应的人不用负责”这件事。"}
   ]}
 );
+
+// ===== V6.0：角色群像与连续故事更新 =====
+Object.assign(GAME_DATA, { version:"6.0", subtitle:"向日葵中班的连续日常与多周目回忆" });
+const V6_CHARACTER_UPDATES = {
+  qaq:{trait:"平时神秘安静，只有遇到喜欢的高难度游戏才明显活跃；不主动邀人，但很乐意讲玩法、看别人玩。",likes:"高难度游戏、固定游戏搭子、安静旁观"},
+  diandian:{trait:"外向而有分寸，想问就问、需要帮助就开口；擅长生活小事和照顾花草，可惜几乎没有中奖运。",likes:"直接提问、花草、解决小麻烦"},
+  moto:{trait:"大家口中的猫头或狗头车；爱做无害又可爱的恶作剧，也会学着投喂大家。",likes:"抓宠物游戏、饮料、可爱的捣乱"},
+  huahua:{trait:"看起来淡淡的，常被补习班占走时间；会默默补位，不抛下掉队的伙伴，而且中奖和抢限量都很强。",likes:"莲花玩具、投喂、陪伙伴慢慢来"},
+  momo:{trait:"聪明、大大咧咧、想到什么说什么；什么游戏都玩，开心就够了，并相信自己总有一天会养到猫。",likes:"真正的小猫、轻松话题、好玩的游戏"},
+  niko:{trait:"向日葵中班元老之一；稳重，认真时游戏很强，严肃讨论结束后也能立刻继续一起闹。",likes:"策略讨论、接梗、把事情讲清楚"},
+  taoba:{trait:"耐心到令人惊讶，擅长解释复杂规则和在缺资源时想现实办法；会量力而行地帮助亲近的人。",likes:"复杂规则、实践、饮料"},
+  puff:{trait:"好奇、爱想办法、喜欢鬼故事；问题严重到一定程度才会指出，自以为委婉，其实仍然很直接。",likes:"鬼故事、新玩法、熟悉的音乐"},
+  huan:{trait:"曾经转学离开又回来；兴趣来得快也去得快，但最近真的在认真练琴。",likes:"新鲜兴趣、练琴、被开玩笑会种地"},
+  xizhou:{trait:"最近因为到处看演出而极少出现；社牛、眼力好、爱憎分明，大家会期待他替所有人说出难开口的话。",likes:"演出、美食、抽奖、直指问题"},
+  latiao:{trait:"非常忙，常常不能到场；擅长甜点，被冒犯时会直接说，也愿意分享自己的倒霉事。",likes:"甜点、坦率、有人认真听"},
+  cutie:{trait:"出现不多，也没有固定亲密小圈；实力很强却不炫耀，更愿意聊收藏、营养饭和偶尔奇怪的梦。",likes:"卡通收藏、均衡便当、照顾留下的植物"}
+};
+GAME_DATA.characters.forEach(c=>Object.assign(c,V6_CHARACTER_UPDATES[c.id]||{}));
+
+// 移除与最终角色设定冲突较大的旧事件，保留结构与收藏兼容。
+const V6_REMOVE_EVENTS = new Set(["missing_moto","lost_voice","two_leaders","night_guard","credit","lunch","quiet_lunch","broken_keepsake"]);
+const V6_REMOVE_FOLLOWUPS = new Set(["voice_return","roles_return"]);
+GAME_DATA.events = GAME_DATA.events.filter(e=>!V6_REMOVE_EVENTS.has(e.id));
+GAME_DATA.followups = GAME_DATA.followups.filter(e=>!V6_REMOVE_FOLLOWUPS.has(e.id));
+
+GAME_DATA.events.push(
+  {
+    id:"v6_game_group_new",day:[2,6],title:"今天试哪个新游戏",characters:["qaq","momo","niko","huahua"],
+    text:"QAQ丨带来一个规则很多的新游戏。馍馍已经说“先开一局再说”，妮蔻要求先把最容易弄错的地方讲清楚。花花今天补习结束得晚，大家还在犹豫要不要先开始。",
+    choices:[
+      {text:"等花花来齐以后再开第一局",effects:{stats:{kindness:2},bonds:{qaq:2,huahua:3,momo:1,niko:1}},flags:["game_group_waited"],result:"馍馍先去玩了别的。花花赶来后，QAQ丨从头重新讲了一遍规则，没有人催她。"},
+      {text:"先开教学局，给花花留一张规则卡",effects:{stats:{order:1,creativity:1},bonds:{qaq:2,niko:2,huahua:1}},flags:["game_rule_card"],result:"妮蔻把容易误解的地方写得很清楚。花花来晚了，但只看一遍就跟上了。"},
+      {text:"让馍馍直接带大家边玩边学",effects:{stats:{courage:1},bonds:{momo:3,qaq:1}},result:"第一局乱成一团，却很好笑。QAQ丨在旁边认真看完，第二局才开始纠正所有人的玩法。"}
+    ]
+  },
+  {
+    id:"v6_pet_game",day:[4,10],title:"再抓最后一只",characters:["qaq","moto"],
+    text:"QAQ丨和蘑托车蹲在角落玩抓宠物游戏，两个人都说抓到最后一只就停。过了很久，最后一只后面又出现了一只更稀有的。",
+    choices:[
+      {text:"提醒他们先去吃点东西",effects:{stats:{kindness:1},bonds:{qaq:2,moto:2}},flags:["pet_game_break"],result:"蘑托车嘴上说马上，身体却没动。QAQ丨最后把游戏暂停，先把两个人都拉去吃东西。"},
+      {text:"坐下来一起看他们抓",effects:{stats:{creativity:1},bonds:{qaq:2,moto:3}},flags:["pet_game_watched"],result:"你本来只是看，最后也开始替他们记哪只宠物还没抓到。"}
+    ]
+  },
+  {
+    id:"v6_diandian_question",day:[1,5],title:"点点先举了手",characters:["diandian","taoba"],
+    text:"老师讲完新的活动规则，教室里安静了几秒。点点先举手说：“我没听懂这里。”桃爸把复杂的步骤重新拆成了三小步。",
+    choices:[
+      {text:"跟着点点一起把不懂的地方问出来",effects:{stats:{courage:2,order:1},bonds:{diandian:2,taoba:2}},flags:["asked_openly"],result:"原来不懂的不只你们两个。桃爸换了三种说法，直到大家都能自己做一遍。"},
+      {text:"帮点点把问题画成图",effects:{stats:{creativity:2},bonds:{diandian:2,taoba:1}},result:"点点一看图就懂了，还顺手替旁边的人解释了一次。"}
+    ]
+  },
+  {
+    id:"v6_lottery",day:[3,11],title:"这次谁来抽",characters:["diandian","huahua","xizhou"],
+    text:"西洲难得回来，带来几张小奖券。大家都知道点点几乎抽不中，花花却常常一伸手就抽到最好的一张。",
+    choices:[
+      {text:"让点点先抽一次",effects:{stats:{courage:1},bonds:{diandian:3,xizhou:1}},flags:["diandian_lost_again"],result:"点点果然抽到“谢谢参与”，自己先笑了。西洲马上又加了一轮，说这次不算。"},
+      {text:"请花花帮别人代抽",effects:{stats:{kindness:1},bonds:{huahua:3,xizhou:2}},flags:["huahua_lucky"],result:"花花替别人抽到了一等奖，自己却只拿了最普通的一张贴纸。"},
+      {text:"让西洲把奖品改成人人都有",effects:{stats:{order:1,kindness:1},bonds:{xizhou:2}},result:"西洲说那就不叫抽奖了，但最后还是把每个人的奖品都补齐了。"}
+    ]
+  },
+  {
+    id:"v6_drink_group",day:[3,12],title:"今天喝什么",characters:["moto","taoba","momo"],
+    text:"蘑托车、桃爸和馍馍又开始讨论今天喝什么。蘑托车想试新品，桃爸认真比较配料，馍馍已经说“都行，快点决定”。",
+    choices:[
+      {text:"听桃爸分析完再选",effects:{stats:{order:1},bonds:{taoba:3,moto:1,momo:1}},result:"桃爸分析得太完整，最后三个人分别选了三种不同的。"},
+      {text:"跟蘑托车一起选最奇怪的新品",effects:{stats:{courage:1},bonds:{moto:3,momo:1}},result:"味道没有想象中奇怪，蘑托车宣布下次还要点更夸张的。"},
+      {text:"让馍馍直接拍板",effects:{stats:{kindness:1},bonds:{momo:3,taoba:1}},result:"馍馍选了最稳妥的一种，三个人边喝边继续讨论下次。"}
+    ]
+  },
+  {
+    id:"v6_latiao_delivery",day:[5,13],title:"辣条今天还是没来",characters:["latiao","huahua","cutie"],
+    text:"辣条又因为忙没能来，但花花带来了一盒她提前做好的小点心。盒盖上写着：‘别问为什么少了两个，我试味道。’",
+    choices:[
+      {text:"先给花花留一份",effects:{stats:{kindness:2},bonds:{huahua:3,latiao:2}},flags:["saved_for_huahua"],result:"花花说自己已经吃过试做品了，还是把那一份收好，准备下次见到辣条时一起吃。"},
+      {text:"给辣条写一张大家都吃到了的回信",effects:{stats:{kindness:1,creativity:1},bonds:{latiao:3,huahua:1}},flags:["latiao_reply"],result:"第二天辣条回了一句：‘知道了。下次别让花花一路拎着，挺重的。’"},
+      {text:"问小可爱要不要一起试吃",effects:{stats:{kindness:1},bonds:{cutie:2,latiao:1}},result:"小可爱认真评价了甜度，然后平静地说昨晚又梦见辣条来她家蹭饭。"}
+    ]
+  },
+  {
+    id:"v6_cutie_dream",day:[6,14],title:"小可爱的奇怪梦",characters:["cutie","latiao"],
+    text:"小可爱忽然说：‘奇怪。我也没见过辣条。刚才好像梦到辣条住我隔壁，还来我家蹭饭了。’她的语气平静得像在说午饭菜单。",
+    choices:[
+      {text:"认真问梦里辣条吃了什么",effects:{stats:{creativity:2},bonds:{cutie:3,latiao:1}},flags:["asked_dream_menu"],result:"小可爱想了很久，说梦里的辣条把她营养搭配好的饭全吃完了，还嫌汤太淡。"},
+      {text:"把这个梦画成四格故事",effects:{stats:{creativity:2},bonds:{cutie:2,puff:1}},flags:["dream_comic"],result:"泡芙看完以后说一点也不恐怖，但很像真的会发生。"}
+    ]
+  },
+  {
+    id:"v6_plant_first",day:[2,8],title:"窗边那盆不是她种的植物",characters:["cutie","diandian"],
+    text:"点点发现小可爱每天都会给窗边一盆植物浇水。小可爱说那不是她种的，是一个已经转学的朋友留下来的。",
+    choices:[
+      {text:"只问清楚多久浇一次，不追问那位朋友",effects:{stats:{kindness:2,order:1},bonds:{cutie:3,diandian:1}},flags:["plant_kept"],result:"小可爱把浇水日期告诉了你。她没有多说，但把花盆往有阳光的地方挪了一点。"},
+      {text:"和点点一起做一张不写名字的照顾表",effects:{stats:{order:2},bonds:{cutie:2,diandian:2}},flags:["plant_schedule"],result:"表上只写着‘窗边的植物’，没有写它属于谁。"}
+    ]
+  },
+  {
+    id:"v6_huan_piano",day:[4,10],title:"这次好像不是三分钟热度",characters:["huan","qaq"],
+    text:"欢佬最近一直在练琴。QAQ丨问他今天还玩不玩，欢佬说要先练完。QAQ丨只回答了一声“好”。",
+    choices:[
+      {text:"在旁边等他练完",effects:{stats:{kindness:1},bonds:{huan:3,qaq:2}},flags:["piano_kept"],result:"欢佬练完才加入游戏。没有人催他，他自己也没有半途跑去做别的。"},
+      {text:"请他弹一小段给大家听",effects:{stats:{courage:1,creativity:1},bonds:{huan:3}},flags:["piano_shared"],result:"欢佬先说还没练好，最后还是弹了一小段。馍馍第一个鼓掌。"}
+    ]
+  },
+  {
+    id:"v6_xizhou_return",day:[7,16],title:"西洲偶尔回来一次",characters:["xizhou","puff","diandian"],
+    text:"西洲很久没出现，今天一进教室就开始讲最近看过的演出和吃过的东西。泡芙只要点点头，他也能自己把故事讲得热闹。",
+    choices:[
+      {text:"问他最好吃的是哪一样",effects:{stats:{kindness:1},bonds:{xizhou:3,puff:1}},flags:["xizhou_food_story"],result:"西洲认真夸了一家真的很好吃的点心，又顺便把另外两家批评得很具体。"},
+      {text:"请他讲最近最好看的演出",effects:{stats:{creativity:1},bonds:{xizhou:3,puff:2}},flags:["same_music"],result:"泡芙发现自己也喜欢其中一位歌手。西洲说她品味终于进步了。"},
+      {text:"问他下次什么时候再来",effects:{stats:{kindness:1},bonds:{xizhou:2,diandian:1}},result:"西洲说不知道，行程很多。但他说下次回来还会带抽奖。"}
+    ]
+  },
+  {
+    id:"v6_xizhou_speaks",day:[9,17],title:"终于有人把话说出来",characters:["xizhou","puff","latiao"],
+    text:"大家都对一个总抢别人东西、还装作没事的外班小朋友有意见，却只在私下说。西洲听完，当面指出了对方到底哪里让人讨厌。",
+    choices:[
+      {text:"支持西洲把具体问题说清楚",effects:{stats:{courage:2,order:1},bonds:{xizhou:3,latiao:2}},flags:["xizhou_spoke"],result:"没有人觉得他把事情搞大，反而都松了一口气。对方第一次知道大家真正介意的是什么。"},
+      {text:"由泡芙再补充一句比较委婉的话",effects:{stats:{courage:1,kindness:1},bonds:{puff:3,xizhou:1}},flags:["puff_not_so_gentle"],result:"泡芙认真铺垫了很久，最后说出来的话仍然很直接。西洲听完说：‘你这也没委婉到哪去。’"}
+    ]
+  },
+  {
+    id:"v6_cute_prank",day:[2,12],title:"猫头又做了什么",characters:["moto","momo","taoba"],
+    text:"大家发现所有铅笔盒被排成一条小火车，最后一节还放着一颗糖。没人真的生气，只是一起喊了一声：‘狗头车！’",
+    choices:[
+      {text:"把小火车继续接长",effects:{stats:{creativity:1},bonds:{moto:3,momo:1}},flags:["prank_train"],result:"蘑托车从门后探出头，发现大家比她摆得还长，立刻加入了。"},
+      {text:"假装没发现她躲在门后",effects:{stats:{kindness:1},bonds:{moto:3,taoba:1}},result:"所有人都配合着找‘犯人’，蘑托车最后自己笑得藏不住了。"}
+    ]
+  },
+  {
+    id:"v6_momo_cat",day:[5,14],title:"窗外真的有一只猫",characters:["momo","niko"],
+    text:"馍馍第一个发现窗外有一只真正的小猫。她立刻停下手里的游戏，趴到窗边看了很久。",
+    choices:[
+      {text:"陪她安静看一会儿",effects:{stats:{kindness:1},bonds:{momo:3,niko:1}},flags:["watched_real_cat"],result:"馍馍说以后自己一定会养猫，语气像在说一件迟早会发生的事。"},
+      {text:"请妮蔻提醒大家不要吓跑它",effects:{stats:{order:1},bonds:{niko:2,momo:2}},result:"妮蔻认真说完注意事项，又和大家一起蹲在窗边看猫打哈欠。"}
+    ]
+  },
+  {
+    id:"v6_taoba_no_material",day:[7,15],title:"没有材料也得想办法",characters:["taoba","diandian","xizhou"],
+    text:"点点想修一个坏掉的小架子，却发现缺少原本需要的材料。桃爸蹲下来研究现有的纸板和绳子，西洲则说直接换新的最快。",
+    choices:[
+      {text:"跟桃爸用现有材料试做",effects:{stats:{order:2,creativity:1},bonds:{taoba:3,diandian:2}},flags:["made_from_nothing"],result:"做出来的架子没有新的漂亮，但真的能用。桃爸说这已经够了。"},
+      {text:"接受西洲买新的，再保留旧架子的零件",effects:{stats:{order:1},bonds:{xizhou:2,taoba:1}},result:"西洲不在意花费，桃爸则把还能用的零件全部整理好，免得以后再缺。"}
+    ]
+  },
+  {
+    id:"v6_cute_collection",day:[8,16],title:"小可爱愿意展示的东西",characters:["cutie","huahua"],
+    text:"有人夸小可爱很会做事，她只说还好。可一提到她喜欢的卡通角色，她马上拿出一排摆件照片，开始认真介绍每一个。",
+    choices:[
+      {text:"请她选一个最喜欢的讲故事",effects:{stats:{kindness:1,creativity:1},bonds:{cutie:3}},flags:["collection_story"],result:"她最后说了很久，远比介绍自己会做什么时详细。"},
+      {text:"和花花一起做一个展示角",effects:{stats:{creativity:2},bonds:{cutie:2,huahua:2}},flags:["collection_corner"],result:"花花没有抢着设计，只帮她把每个摆件都放到最合适的位置。"}
+    ]
+  }
+);
+
+GAME_DATA.followups.push(
+  {id:"v6_plant_leaf",day:[9,16],title:"植物长出一片新叶",characters:["cutie","diandian"],requireFlag:"plant_kept",text:"窗边的植物长出一片很嫩的新叶。小可爱看了很久，只说：‘它还记得怎么长。’",choices:[{text:"把新叶日期记下来",effects:{stats:{order:1,kindness:1},bonds:{cutie:3}},flags:["plant_leaf"],result:"记录表上多了一行日期。小可爱没有提那位已经转学的朋友。"}]},
+  {id:"v6_plant_bloom",day:[12,17],title:"这一次终于开花了",characters:["cutie","all"],requireMeta:{runs:3},requireMetaEvents:["v6_plant_first","v6_plant_leaf"],text:"很多学期以后，那盆植物第一次开花。小可爱把花盆搬到窗边最亮的位置，大家轮流来看。",choices:[{text:"只拍植物，不要求小可爱讲过去",effects:{stats:{kindness:2},bonds:{cutie:4}},flags:["plant_bloomed"],result:"照片里没有那位离开的同学，但所有人都知道这朵花为什么被照顾了这么久。"}]},
+  {id:"v6_piano_second",day:[10,17],title:"欢佬没有换掉这个兴趣",characters:["huan","momo"],requireMeta:{runs:2},requireMetaEvents:["v6_huan_piano"],text:"下一次再见到欢佬时，他还在练琴。大家本来以为这也会像以前那些兴趣一样很快过去。",choices:[{text:"请他弹完再去玩",effects:{stats:{kindness:1,creativity:1},bonds:{huan:4,momo:1}},flags:["piano_continues"],result:"馍馍坐不住，先跑去玩了。等欢佬弹完，她又第一个回来听。"}]},
+  {id:"v6_game_memory",day:[8,17],title:"这个规则以前是不是讲过",characters:["qaq","niko","momo"],requireMeta:{runs:2},requireMetaEvents:["v6_game_group_new"],text:"QAQ丨讲到一半忽然停下来，说这个规则好像以前已经讲过。妮蔻也觉得熟悉，馍馍却说反正再玩一次就知道了。",choices:[{text:"不追究，直接再开一局",effects:{stats:{creativity:1},bonds:{qaq:3,niko:2,momo:2}},flags:["game_dejavu"],result:"这一局和记忆里不太一样，但大家都觉得自己已经知道下一步会发生什么。"}]},
+  {id:"v6_xizhou_again",day:[10,17],title:"西洲又很久没来",characters:["xizhou","puff"],requireMeta:{runs:2},requireMetaEvents:["v6_xizhou_return"],text:"西洲又消失了很久。泡芙听见大家说起他，只说等他回来，教室一定又会一下子变热闹。",choices:[{text:"给他留一张抽奖券",effects:{stats:{kindness:1},bonds:{xizhou:3,puff:2}},flags:["xizhou_ticket"],result:"西洲下次回来时先嫌你们多此一举，然后把奖券又放进了新的抽奖盒。"}]}
+);
+
+GAME_DATA.endings.push(
+  {id:"plant_keepsake",name:"窗边一直有人记得",priority:96,test:(s,m)=>s.flags.includes("plant_bloomed"),desc:"开放日结束后，那盆植物仍留在窗边。你没有见过种下它的人，却见证了它被照顾、长叶、开花。小可爱从不把这件事说得很重，但每一次浇水都让过去继续留在今天。"},
+  {id:"same_table_game",name:"这一局先不结束",priority:91,test:(s,m)=>s.flags.includes("game_dejavu")&&s.flags.includes("game_group_waited"),desc:"很多游戏玩过以后都会收起来，可你们总能找到下一款。有人晚到，有人只看，有人边玩边学。真正被留下来的不是某一局胜负，而是那张总有人愿意重新坐回来的桌子。"},
+  {id:"piano_stays",name:"这次真的坚持下来了",priority:90,test:(s,m)=>s.flags.includes("piano_continues"),desc:"欢佬以前迷上过很多东西，也放下过很多东西。这次不同。练琴没有占满他的全部生活，却稳稳留在其中。大家不再问他什么时候会换兴趣，只会在他练完以后给他留一个位置。"}
+);
+
+// V6.0 每局最多保留两枚代表奖章，旧图鉴继续兼容。

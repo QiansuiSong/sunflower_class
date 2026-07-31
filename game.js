@@ -13,6 +13,8 @@
   });
   let state = load() || freshState();
   let meta = loadMeta();
+  meta={events:[],awards:[],endings:[],runs:0,...meta};
+  ["events","awards","endings"].forEach(k=>{ if(!Array.isArray(meta[k])) meta[k]=[]; });
 
   function load(){ try { return JSON.parse(localStorage.getItem(SAVE_KEY)); } catch { return null; } }
   function loadMeta(){
@@ -42,6 +44,8 @@
     if(e.requireFlag && !state.flags.includes(e.requireFlag)) return false;
     if(e.requireFlags && !e.requireFlags.every(f=>state.flags.includes(f))) return false;
     if(e.notFlags && e.notFlags.some(f=>state.flags.includes(f))) return false;
+    if(e.requireMetaEvents && !e.requireMetaEvents.every(id=>meta.events.includes(id))) return false;
+    if(e.excludeMetaEvents && e.excludeMetaEvents.some(id=>meta.events.includes(id))) return false;
     if(e.requireMeta){
       const r=e.requireMeta;
       if(r.runs && meta.runs<r.runs) return false;
@@ -118,9 +122,9 @@
     return `<div class="faces">${ids.map(id=>{const c=character(id);return `<span title="${c.name}">${c.icon}</span>`}).join("")}</div>`;
   }
   function renderStart(){
-    app.innerHTML=`<main class="start card"><div class="sun">🌻</div><p class="eyebrow">幼儿园文字剧情 · 单局约 15～25 分钟</p><h1>${GAME_DATA.title}</h1><p class="subtitle">${GAME_DATA.subtitle}</p>
+    app.innerHTML=`<main class="start card"><div class="sun">🌻</div><p class="eyebrow">V6.0 群像连续剧情 · 单局约 15～25 分钟</p><h1>${GAME_DATA.title}</h1><p class="subtitle">${GAME_DATA.subtitle}</p>
     <p>你是刚转入向日葵中班的小朋友。十八天后，班级会一起迎来开放日。你会交到不同的朋友，也会和大家一起做手工、玩游戏、解决小小麻烦，留下很多可爱的回忆。</p>
-    <div class="start-rules"><span>每天选一件事</span><span>遇见不同故事</span><span>收集结局和小奖章</span></div>
+    <div class="start-rules"><span>每天选一件事</span><span>遇见不同故事</span><span>跨周目延续故事</span></div>
     <p class="collection-line">第 ${meta.runs} 次学期 · 事件 ${meta.events.length}/${GAME_DATA.events.length+GAME_DATA.followups.length} · 结局 ${meta.endings.length}/${GAME_DATA.endings.length} · 奖章 ${meta.awards.length}/${GAME_DATA.awards.length}</p>
     <button class="primary" id="start">${state.day>1||state.history.length?"继续这学期":"走进教室"}</button>
     ${state.history.length?`<button class="ghost" id="reset">重新开始这一学期</button>`:""}<button class="ghost" id="gallery">结局与奖章图鉴</button></main>`;
