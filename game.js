@@ -153,8 +153,75 @@
   }
   function endingNarrative(){
     const f=strongestFriend();
-    const ending=[...GAME_DATA.endings].sort((a,b)=>b.priority-a.priority).find(x=>x.test(state,meta));
-    return {friend:character(f[0]),score:f[1],ending};
+    const baseEndingIds=new Set(["heart","architect","spark","first_step","friendship","ordinary"]);
+
+    // 第一层：只处理真正依赖连续剧情或多周目条件的特殊结局。
+    // 若同一局同时满足多个特殊结局，优先发放尚未收集的，再比较原有优先级。
+    const specialCandidates=GAME_DATA.endings
+      .filter(e=>!baseEndingIds.has(e.id) && e.test(state,meta))
+      .sort((a,b)=>{
+        const aNew=meta.endings.includes(a.id)?0:1;
+        const bNew=meta.endings.includes(b.id)?0:1;
+        return (bNew-aNew) || ((b.priority||0)-(a.priority||0));
+      });
+    if(specialCandidates.length){
+      return {friend:character(f[0]),score:f[1],ending:specialCandidates[0]};
+    }
+
+    // 第二层：基础结局不再按固定 if 顺序截断，而是根据本局路线综合评分。
+    const actionCount=(title)=>state.history.filter(h=>h.title===title && !h.choice).length;
+    const flagCount=(flags)=>flags.filter(flag=>state.flags.includes(flag)).length;
+    const bondValues=Object.values(state.bonds).sort((a,b)=>b-a);
+    const topBond=bondValues[0]||0;
+    const secondBond=bondValues[1]||0;
+
+    const routeScores={
+      heart:
+        state.stats.kindness*2 +
+        actionCount("在角落悄悄聊天")*2 + actionCount("帮忙收拾教室") +
+        flagCount(["public_reply","private_reply","thanks_circle","saw_the_dot","disappointment_spoken","quiet_respected"])*2,
+      architect:
+        state.stats.order*2 +
+        actionCount("帮忙收拾教室")*2 +
+        flagCount(["careful_search","fair_rules","prototype","storm_leader","credit_board","safe_finale","plan_b_saved","promise_repaired"])*2,
+      spark:
+        state.stats.creativity*2 +
+        actionCount("认真做一件大手工")*2 +
+        flagCount(["paper_track","story_fair","old_notes","water_wall","failure_museum","secret_lore","class_game","failure_clues"])*2,
+      first_step:
+        state.stats.courage*2 +
+        actionCount("加入课间游戏")*2 +
+        flagCount(["true_finale","final_rescue","player_host","public_accusation","named_jealousy","remembered_dream"])*2
+    };
+
+    const candidates=Object.entries(routeScores).map(([id,score])=>({
+      ending:GAME_DATA.endings.find(e=>e.id===id), score
+    }));
+
+    // 友情结局只有在关系真正集中时才参与，避免普通游玩被关系值轻易截走。
+    if(topBond>=12 && topBond-secondBond>=3){
+      candidates.push({
+        ending:GAME_DATA.endings.find(e=>e.id==="friendship"),
+        score:topBond*2 + (topBond-secondBond)*2
+      });
+    }
+
+    // 普通结局只在没有明显路线时参与。
+    const coreStats=[state.stats.kindness,state.stats.order,state.stats.creativity,state.stats.courage];
+    const maxStat=Math.max(...coreStats);
+    const minStat=Math.min(...coreStats);
+    if(maxStat<11 && maxStat-minStat<=2){
+      candidates.push({ending:GAME_DATA.endings.find(e=>e.id==="ordinary"),score:maxStat*2+4});
+    }
+
+    const valid=candidates.filter(x=>x.ending).sort((a,b)=>b.score-a.score);
+    const bestRaw=valid[0].score;
+    // 只有与本局最佳路线相差不超过 6 分的结局，才允许由图鉴机制分流。
+    const closeRoutes=valid.filter(x=>bestRaw-x.score<=6);
+    const unseenClose=closeRoutes.filter(x=>!meta.endings.includes(x.ending.id));
+    const chosen=(unseenClose.length?unseenClose:closeRoutes).sort((a,b)=>b.score-a.score)[0];
+
+    return {friend:character(f[0]),score:f[1],ending:chosen.ending};
   }
   function renderEnding(){
     const e=endingNarrative();
